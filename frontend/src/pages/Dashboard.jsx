@@ -12,9 +12,12 @@ const mockStats = [
 ];
 
 const mockTournaments = [
-  { name: 'Summer Cricket Cup', sport: '🏏', status: 'LIVE', match: 'QF Match 1', time: 'Today 4PM' },
-  { name: 'City Football Clash', sport: '⚽', status: 'UPCOMING', match: 'Group Stage', time: 'Sat 6PM' },
-  { name: 'State Badminton', sport: '🏸', status: 'COMPLETED', match: "Men's Singles", time: 'Apr 2025' },
+  { name: 'Summer Cricket Cup', sport: '🏏', status: 'LIVE', match: 'QF Match 1', time: 'Today 4PM', id: 'cricket' },
+  { name: 'Valorant Showdown', sport: '🎯', status: 'LIVE', match: 'Semifinals', time: 'Online Now', id: 'valorant' },
+  { name: 'BGMI Battlegrounds', sport: '🔫', status: 'UPCOMING', match: 'Match 4 - Erangel', time: 'Sat 8PM', id: 'bgmi' },
+  { name: 'City Football Clash', sport: '⚽', status: 'UPCOMING', match: 'Group Stage', time: 'Sat 6PM', id: 'football' },
+  { name: 'Online Chess League', sport: '♟️', status: 'COMPLETED', match: 'Round 7 Final', time: 'May 2025', id: 'chess' },
+  { name: 'State Badminton', sport: '🏸', status: 'COMPLETED', match: "Men's Singles", time: 'Apr 2025', id: 'badminton' },
 ];
 
 export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
@@ -112,7 +115,7 @@ export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
           </div>
           <div className="divide-y divide-[#1a1a1a]/10">
             {mockTournaments.map((t, i) => (
-              <div key={i} className="px-8 py-5 flex items-center justify-between hover:bg-[#c4e4e3]/30 transition-colors cursor-pointer group" onClick={() => navigate(`/tournament/${t.name.toLowerCase().includes('cricket') ? 'cricket' : t.name.toLowerCase().includes('football') ? 'football' : 'badminton'}`)}>
+              <div key={i} className="px-8 py-5 flex items-center justify-between hover:bg-[#c4e4e3]/30 transition-colors cursor-pointer group" onClick={() => navigate(`/tournament/${t.id}`)}>
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{t.sport}</span>
                   <div>

@@ -7,9 +7,8 @@ const tournamentData = {
   cricket: {
     title: 'Summer Cricket Cup',
     tags: ['cricket', 'league', 'local'],
-    color: 'bg-[#e86c3f]',
-    textColor: 'text-[#e86c3f]',
-    emoji: '🏏',
+    color: 'bg-[#e86c3f]', textColor: 'text-[#e86c3f]', emoji: '🏏',
+    type: 'physical',
     gameDetails: 'A massive 8-team summer cricket league played across 4 local grounds. Hard tennis ball format with 10-over matches. Guaranteed minimum of 3 matches per team in the group stage before knockouts.',
     liveTournaments: [
       { name: 'Quarter Finals - Match 1', status: 'LIVE', team1: 'City Strikers', team2: 'East End XI', score: '84/3 vs 42/0', time: 'Over 5.2' }
@@ -22,9 +21,8 @@ const tournamentData = {
   football: {
     title: 'City Football Clash',
     tags: ['soccer', 'knockout', 'fast'],
-    color: 'bg-[#3cc85a]',
-    textColor: 'text-[#3cc85a]',
-    emoji: '⚽',
+    color: 'bg-[#3cc85a]', textColor: 'text-[#3cc85a]', emoji: '⚽',
+    type: 'physical',
     gameDetails: 'Fast-paced 5-a-side knockout tournament. 16 teams battle it out in a single weekend. High intensity, fast matches on turf pitches. Professional referees and live scoring.',
     liveTournaments: [
       { name: 'Semi Final 1', status: 'LIVE', team1: 'Red Devils', team2: 'Blue Falcons', score: '2 - 1', time: '64\'' }
@@ -37,9 +35,8 @@ const tournamentData = {
   badminton: {
     title: 'State Badminton',
     tags: ['badminton', 'brackets', 'pro'],
-    color: 'bg-[#ffb800]',
-    textColor: 'text-[#b38100]',
-    emoji: '🏸',
+    color: 'bg-[#ffb800]', textColor: 'text-[#b38100]', emoji: '🏸',
+    type: 'physical',
     gameDetails: 'State level badminton championship featuring men\'s singles, women\'s singles, and mixed doubles. Professional grade umpires, indoor synthetic courts, and digital bracket tracking.',
     liveTournaments: [
       { name: 'Men\'s Singles Final', status: 'LIVE', team1: 'R. Sharma', team2: 'K. Patel', score: '21-19, 14-8', time: 'Set 2' }
@@ -52,9 +49,8 @@ const tournamentData = {
   hoops: {
     title: 'Downtown Basketball',
     tags: ['hoops', 'groups', 'local'],
-    color: 'bg-[#00b4d8]',
-    textColor: 'text-[#008ba6]',
-    emoji: '🏀',
+    color: 'bg-[#00b4d8]', textColor: 'text-[#008ba6]', emoji: '🏀',
+    type: 'physical',
     gameDetails: 'Urban 3v3 basketball tournament hosted at the downtown community center. Group stage followed by sudden death playoffs. Live DJ, food trucks, and high-energy crowd.',
     liveTournaments: [
       { name: 'Group B Match', status: 'LIVE', team1: 'Dunkers', team2: 'Net Ninjas', score: '45 - 42', time: 'Q4 2:10' }
@@ -62,6 +58,62 @@ const tournamentData = {
     pastTournaments: [
       { name: 'Winter Hoops 2025', winner: 'Alley Oops', runnerUp: 'Dunkers', date: 'Jan 2025' },
       { name: 'Street Ball 2024', winner: 'Net Ninjas', runnerUp: 'Blockers', date: 'July 2024' }
+    ]
+  },
+  valorant: {
+    title: 'Valorant Showdown',
+    tags: ['esports', '5v5', 'online', 'fps'],
+    color: 'bg-[#ff4655]', textColor: 'text-[#ff4655]', emoji: '🎯',
+    type: 'online',
+    gameDetails: 'Competitive 5v5 tactical FPS tournament on Nova Hub. Teams battle through group stages in best-of-3 series, leading to a live Grand Final. All matches are online and monitored with anti-cheat enabled.',
+    liveTournaments: [
+      { name: 'Semifinals - Match 2', status: 'LIVE', team1: 'Team Nova', team2: 'Phantom Kings', score: '9 - 7', time: 'Round 12' }
+    ],
+    pastTournaments: [
+      { name: 'Valorant Open S2', winner: 'Team Nova', runnerUp: 'Shadow Edge', date: 'May 2025' },
+      { name: 'Iron to Radiant Cup', winner: 'Phantom Kings', runnerUp: 'Neon Rush', date: 'Feb 2025' }
+    ]
+  },
+  bgmi: {
+    title: 'BGMI Battlegrounds',
+    tags: ['battle royale', 'squads', 'online', 'mobile'],
+    color: 'bg-[#f97316]', textColor: 'text-[#f97316]', emoji: '🔫',
+    type: 'online',
+    gameDetails: 'Squad-based online BGMI tournament with 25 teams of 4. Chicken dinner points system across 6 matches. Final standings based on kills + placement. Device restrictions: Android/iOS only, emulators banned.',
+    liveTournaments: [
+      { name: 'Match 3 - Erangel', status: 'LIVE', team1: 'Ghost Squad', team2: 'Iron Tier', score: '#1 vs #3', time: 'Zone 5' }
+    ],
+    pastTournaments: [
+      { name: 'BGMI Showdown S3', winner: 'Ghost Squad', runnerUp: 'Alpha Boys', date: 'June 2025' },
+      { name: 'Chicken Derby 2024', winner: 'Savage 4', runnerUp: 'Iron Tier', date: 'Nov 2024' }
+    ]
+  },
+  freefire: {
+    title: 'Free Fire Masters',
+    tags: ['free fire', 'ranked', 'squads', 'online'],
+    color: 'bg-[#eab308]', textColor: 'text-[#a37c00]', emoji: '🔥',
+    type: 'online',
+    gameDetails: 'Free Fire squad championship with 20 teams competing across 8 matches on Bermuda and Kalahari maps. Point-based ranking with kill bonuses. Grandmaster accounts only. Cash prize distributed to top 3 teams.',
+    liveTournaments: [
+      { name: 'Match 5 - Kalahari', status: 'LIVE', team1: 'Blaze Squad', team2: 'Nova Killers', score: '#2 vs #4', time: 'Zone 4' }
+    ],
+    pastTournaments: [
+      { name: 'Free Fire Open 2025', winner: 'Blaze Squad', runnerUp: 'Headshot Kings', date: 'April 2025' },
+      { name: 'Summer Clash FF 2024', winner: 'Nova Killers', runnerUp: 'Storm Riders', date: 'Aug 2024' }
+    ]
+  },
+  chess: {
+    title: 'Online Chess League',
+    tags: ['chess', 'elo', 'online', 'blitz'],
+    color: 'bg-white', textColor: 'text-[#1a1a1a]', emoji: '♟️',
+    type: 'online',
+    gameDetails: 'Rated online chess tournament with 32 players. Blitz format (5+2 increment). Hosted on chess.com with verified accounts. Players compete in a Swiss system over 7 rounds. Top ELO rated players get seeds.',
+    liveTournaments: [
+      { name: 'Round 5 - Board 1', status: 'LIVE', team1: 'Arjun Verma', team2: 'Kiran Rao', score: '3 - 2.5', time: 'Move 28' }
+    ],
+    pastTournaments: [
+      { name: 'Blitz Masters 2025', winner: 'Arjun Verma', runnerUp: 'Kiran Rao', date: 'May 2025' },
+      { name: 'Knight Open 2024', winner: 'Priya Shah', runnerUp: 'Amit Das', date: 'Dec 2024' }
     ]
   }
 };

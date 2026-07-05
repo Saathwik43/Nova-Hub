@@ -95,13 +95,24 @@ export const HostForm = ({ setCurrentPage }) => {
             <div className="flex flex-col md:flex-row md:items-baseline gap-4">
               <label className="text-sm font-bold uppercase w-1/3">Sport Category</label>
               <select name="sport" value={form.sport} onChange={handleChange} className="w-full md:w-2/3 border-b-[3px] border-black bg-transparent outline-none py-2 font-mono text-lg font-bold focus:border-white transition-colors interactive-target cursor-pointer">
-                <option>Cricket</option>
-                <option>Football</option>
-                <option>Basketball</option>
-                <option>Badminton</option>
-                <option>Tennis</option>
-                <option>Volleyball</option>
-                <option>Kabaddi</option>
+                <optgroup label="⚡ Physical Sports">
+                  <option>Cricket</option>
+                  <option>Football</option>
+                  <option>Basketball</option>
+                  <option>Badminton</option>
+                  <option>Tennis</option>
+                  <option>Volleyball</option>
+                  <option>Kabaddi</option>
+                </optgroup>
+                <optgroup label="🎮 Online / Esports">
+                  <option>Valorant</option>
+                  <option>BGMI</option>
+                  <option>Free Fire</option>
+                  <option>Chess (Online)</option>
+                  <option>PUBG Mobile</option>
+                  <option>Call of Duty Mobile</option>
+                  <option>Clash Royale</option>
+                </optgroup>
               </select>
             </div>
 
