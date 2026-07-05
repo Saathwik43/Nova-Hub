@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #c4e4e3;
+    color: #1a1a1a;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* Custom typography overrides */
+  h1, h2, h3, h4, .serif-font {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Hide Scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Retro-Sticker Hard Shadow System */
+.hard-shadow {
+  box-shadow: 6px 6px 0px 0px #1a1a1a;
+  transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hard-shadow:hover {
+  box-shadow: 2px 2px 0px 0px #1a1a1a;
+  transform: translate(4px, 4px);
+}
+
+.hard-shadow-active {
+  box-shadow: 2px 2px 0px 0px #1a1a1a;
+  transform: translate(4px, 4px);
+}
+
+/* Sticker Hover translation effects */
+.sticker-hover {
+  transition: all 0.15s ease-in-out;
+}
+.sticker-hover:hover {
+  transform: rotate(2deg) scale(1.05);
+}
+
+/* Custom cursor visual system */
+.gaming-cursor-active {
+  cursor: none !important;
+}
+.gaming-cursor-active * {
+  cursor: none !important;
+}

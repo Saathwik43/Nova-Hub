@@ -1,0 +1,230 @@
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Activity, Trophy, CalendarDays, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const tournamentData = {
+  cricket: {
+    title: 'Summer Cricket Cup',
+    tags: ['cricket', 'league', 'local'],
+    color: 'bg-[#e86c3f]',
+    textColor: 'text-[#e86c3f]',
+    emoji: '🏏',
+    gameDetails: 'A massive 8-team summer cricket league played across 4 local grounds. Hard tennis ball format with 10-over matches. Guaranteed minimum of 3 matches per team in the group stage before knockouts.',
+    liveTournaments: [
+      { name: 'Quarter Finals - Match 1', status: 'LIVE', team1: 'City Strikers', team2: 'East End XI', score: '84/3 vs 42/0', time: 'Over 5.2' }
+    ],
+    pastTournaments: [
+      { name: 'Spring Cup 2025', winner: 'City Blasters', runnerUp: 'East End XI', date: 'March 2025' },
+      { name: 'Winter Bash 2024', winner: 'Strikers', runnerUp: 'Northern Kings', date: 'Dec 2024' }
+    ]
+  },
+  football: {
+    title: 'City Football Clash',
+    tags: ['soccer', 'knockout', 'fast'],
+    color: 'bg-[#3cc85a]',
+    textColor: 'text-[#3cc85a]',
+    emoji: '⚽',
+    gameDetails: 'Fast-paced 5-a-side knockout tournament. 16 teams battle it out in a single weekend. High intensity, fast matches on turf pitches. Professional referees and live scoring.',
+    liveTournaments: [
+      { name: 'Semi Final 1', status: 'LIVE', team1: 'Red Devils', team2: 'Blue Falcons', score: '2 - 1', time: '64\'' }
+    ],
+    pastTournaments: [
+      { name: 'Autumn Clash 2025', winner: 'Red Devils', runnerUp: 'Green Hornets', date: 'Sept 2025' },
+      { name: 'Summer Kick 2024', winner: 'Blue Falcons', runnerUp: 'Iron Legs', date: 'June 2024' }
+    ]
+  },
+  badminton: {
+    title: 'State Badminton',
+    tags: ['badminton', 'brackets', 'pro'],
+    color: 'bg-[#ffb800]',
+    textColor: 'text-[#b38100]',
+    emoji: '🏸',
+    gameDetails: 'State level badminton championship featuring men\'s singles, women\'s singles, and mixed doubles. Professional grade umpires, indoor synthetic courts, and digital bracket tracking.',
+    liveTournaments: [
+      { name: 'Men\'s Singles Final', status: 'LIVE', team1: 'R. Sharma', team2: 'K. Patel', score: '21-19, 14-8', time: 'Set 2' }
+    ],
+    pastTournaments: [
+      { name: 'Open Smash 2025', winner: 'R. Sharma', runnerUp: 'A. Singh', date: 'April 2025' },
+      { name: 'City Classic 2024', winner: 'K. Patel', runnerUp: 'M. Gupta', date: 'Oct 2024' }
+    ]
+  },
+  hoops: {
+    title: 'Downtown Basketball',
+    tags: ['hoops', 'groups', 'local'],
+    color: 'bg-[#00b4d8]',
+    textColor: 'text-[#008ba6]',
+    emoji: '🏀',
+    gameDetails: 'Urban 3v3 basketball tournament hosted at the downtown community center. Group stage followed by sudden death playoffs. Live DJ, food trucks, and high-energy crowd.',
+    liveTournaments: [
+      { name: 'Group B Match', status: 'LIVE', team1: 'Dunkers', team2: 'Net Ninjas', score: '45 - 42', time: 'Q4 2:10' }
+    ],
+    pastTournaments: [
+      { name: 'Winter Hoops 2025', winner: 'Alley Oops', runnerUp: 'Dunkers', date: 'Jan 2025' },
+      { name: 'Street Ball 2024', winner: 'Net Ninjas', runnerUp: 'Blockers', date: 'July 2024' }
+    ]
+  }
+};
+
+const TournamentDetails = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const data = tournamentData[id];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  if (!data) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#c4e4e3] font-mono flex-col gap-4">
+        <h1 className="text-2xl font-bold">Tournament Not Found</h1>
+        <button onClick={() => navigate('/')} className="px-4 py-2 bg-[#1a1a1a] text-white rounded-full">Go Back</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#c4e4e3] text-[#1a1a1a] font-mono selection:bg-black selection:text-white pb-24">
+      {/* Navbar Minimal */}
+      <nav className="p-6 md:p-8 flex items-center justify-between sticky top-0 bg-[#c4e4e3]/90 backdrop-blur-md z-50 border-b border-[#1a1a1a]/10">
+        <button 
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 font-bold hover:gap-3 transition-all px-4 py-2 bg-white/50 rounded-full border-2 border-[#1a1a1a]"
+        >
+          <ArrowLeft className="w-4 h-4" /> Back to Home
+        </button>
+        <div className="font-display font-black tracking-widest text-xl">NOVA // HUB</div>
+      </nav>
+
+      <div className="max-w-6xl mx-auto px-6 md:px-8 mt-12">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col md:flex-row gap-8 items-start mb-16"
+        >
+          <div className={`w-32 h-32 md:w-48 md:h-48 rounded-[2rem] flex items-center justify-center text-6xl md:text-8xl shadow-[8px_8px_0px_0px_rgba(26,26,26,1)] border-[4px] border-[#1a1a1a] ${data.color} shrink-0`}>
+            {data.emoji}
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-wrap gap-2 mb-4">
+              {data.tags.map(tag => (
+                <span key={tag} className="px-3 py-1 bg-white border-2 border-[#1a1a1a] rounded-full text-[10px] uppercase tracking-widest font-bold">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-display font-black italic mb-6 leading-tight">
+              {data.title}
+            </h1>
+            <p className="text-sm md:text-base font-mono opacity-80 max-w-2xl leading-relaxed bg-white/50 p-6 rounded-2xl border border-white">
+              {data.gameDetails}
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Details Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Main Column - Live Actions & Registration */}
+          <div className="lg:col-span-2 space-y-8">
+            
+            {/* Live Tournament Section */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-[#1a1a1a] text-white p-8 rounded-[2rem] shadow-2xl relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+              
+              <div className="flex items-center gap-3 mb-8">
+                <Activity className={`w-6 h-6 ${data.textColor}`} />
+                <h2 className="text-2xl font-display italic font-bold">Live Tournaments</h2>
+                <span className="ml-auto flex h-3 w-3 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              </div>
+
+              {data.liveTournaments.map((match, idx) => (
+                <div key={idx} className="bg-white/10 border border-white/20 rounded-2xl p-6 backdrop-blur-sm">
+                  <div className="flex justify-between items-center mb-6 text-[10px] font-mono tracking-widest uppercase text-white/50">
+                    <span>{match.name}</span>
+                    <span>{match.time}</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="text-right flex-1">
+                      <div className="text-xl md:text-2xl font-black font-display">{match.team1}</div>
+                    </div>
+                    <div className={`px-4 py-2 ${data.color} text-[#1a1a1a] rounded-lg font-black text-xl md:text-2xl min-w-[120px] text-center shadow-inner`}>
+                      {match.score}
+                    </div>
+                    <div className="text-left flex-1">
+                      <div className="text-xl md:text-2xl font-black font-display">{match.team2}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Quick Actions */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
+              <button onClick={() => navigate('/dashboard?tab=join')} className="bg-[#baffc9] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
+                <Users className="w-8 h-8" />
+                <span className="font-bold font-display uppercase text-xl">Register Team</span>
+              </button>
+              <button onClick={() => navigate('/dashboard?tab=host')} className="bg-[#fcebb6] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
+                <CalendarDays className="w-8 h-8" />
+                <span className="font-bold font-display uppercase text-xl">Host Match</span>
+              </button>
+            </motion.div>
+
+          </div>
+
+          {/* Sidebar - Past Tournaments */}
+          <div className="lg:col-span-1">
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-white border-[3px] border-[#1a1a1a] rounded-[2rem] p-8 shadow-[8px_8px_0px_rgba(26,26,26,1)] sticky top-32"
+            >
+              <div className="flex items-center gap-3 mb-8 pb-6 border-b-2 border-[#1a1a1a]/10">
+                <Trophy className="w-6 h-6 text-yellow-500" />
+                <h2 className="text-xl font-display italic font-bold">Past Winners</h2>
+              </div>
+
+              <div className="space-y-6">
+                {data.pastTournaments.map((past, idx) => (
+                  <div key={idx} className="group relative">
+                    <div className="text-[10px] font-mono text-[#1a1a1a]/50 uppercase tracking-widest mb-2">{past.name} • {past.date}</div>
+                    <div className="bg-gray-50 border-2 border-[#1a1a1a]/10 rounded-xl p-4 group-hover:border-[#1a1a1a] group-hover:bg-[#fcebb6]/30 transition-colors">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs font-bold text-[#1a1a1a]/60">Winner</span>
+                        <span className="font-bold font-display text-[#1a1a1a]">{past.winner} 🏆</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-bold text-[#1a1a1a]/60">Runner Up</span>
+                        <span className="font-bold text-[#1a1a1a]/80 text-sm">{past.runnerUp}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TournamentDetails;
