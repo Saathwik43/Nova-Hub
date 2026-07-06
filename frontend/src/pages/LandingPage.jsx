@@ -774,12 +774,12 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME: HELP DESK / CONTACT SUPPORT
          ========================================== */}
-      <section id="contact" className="py-28 px-8 md:px-24 relative z-10 bg-[#1a1a1a] text-white overflow-hidden">
+      <section id="contact" className="py-28 px-8 md:px-24 relative z-10 bg-[#c4e4e3] text-[#1a1a1a] overflow-hidden">
         {/* Background texture grid */}
-        <div className="absolute inset-0 opacity-5 carbon-grid pointer-events-none" />
+        <div className="absolute inset-0 opacity-20 carbon-grid pointer-events-none" />
 
         {/* Floating corner badge */}
-        <div className="absolute top-8 right-8 border border-white/20 px-4 py-2 text-[9px] uppercase tracking-[0.3em] text-white/40 hidden md:block">
+        <div className="absolute top-8 right-8 border border-[#1a1a1a]/20 px-4 py-2 text-[9px] uppercase tracking-[0.3em] text-[#1a1a1a]/40 hidden md:block">
           SUPPORT DESK // EST. 2026
         </div>
 
@@ -792,12 +792,12 @@ export const LandingPage = ({ onOpenAuth, user }) => {
             viewport={{ once: true }}
             className="mb-16"
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-yellow-400 font-bold block mb-4">★ Help Desk</span>
-            <h2 className="text-5xl md:text-7xl font-display font-black italic leading-none text-white mb-4">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#1a1a1a]/60 font-bold block mb-4">★ Help Desk</span>
+            <h2 className="text-5xl md:text-7xl font-display font-black italic leading-none text-[#1a1a1a] mb-4">
               Reach out to<br />
-              <span className="text-yellow-200">Nova Support.</span>
+              <span className="underline decoration-yellow-400 decoration-[6px] underline-offset-4">Nova Support.</span>
             </h2>
-            <p className="text-xs md:text-sm font-mono text-white/50 max-w-lg mt-6 leading-relaxed uppercase tracking-wider">
+            <p className="text-xs md:text-sm font-mono text-[#1a1a1a]/60 max-w-lg mt-6 leading-relaxed uppercase tracking-wider">
               Need help with brackets, ground bookings, player check-ins, or billing? Our desk team responds within 24 hours.
             </p>
           </motion.div>
@@ -817,21 +817,21 @@ export const LandingPage = ({ onOpenAuth, user }) => {
                 { icon: '📞', label: 'Helpline', value: '+91 98765 43210', sub: 'Urgent tournament issues only' },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-5 group">
-                  <div className="w-12 h-12 flex-shrink-0 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-2xl group-hover:bg-yellow-200/10 group-hover:border-yellow-200/30 transition-all">
+                  <div className="w-12 h-12 flex-shrink-0 bg-white/60 border-[2px] border-[#1a1a1a]/20 rounded-xl flex items-center justify-center text-2xl group-hover:bg-yellow-200 group-hover:border-[#1a1a1a] transition-all shadow-[2px_2px_0px_rgba(26,26,26,0.1)]">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-[10px] uppercase tracking-widest text-white/40 mb-0.5">{item.label}</p>
-                    <p className="text-sm font-bold font-mono text-white">{item.value}</p>
-                    <p className="text-[10px] font-mono text-white/30 mt-0.5">{item.sub}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-[#1a1a1a]/50 mb-0.5">{item.label}</p>
+                    <p className="text-sm font-bold font-mono text-[#1a1a1a]">{item.value}</p>
+                    <p className="text-[10px] font-mono text-[#1a1a1a]/40 mt-0.5">{item.sub}</p>
                   </div>
                 </div>
               ))}
 
               {/* Decorative divider */}
-              <div className="h-px w-full bg-white/10 my-2" />
+              <div className="h-px w-full bg-[#1a1a1a]/15 my-2" />
 
-              <p className="text-[10px] font-mono text-white/30 leading-relaxed uppercase tracking-widest">
+              <p className="text-[10px] font-mono text-[#1a1a1a]/40 leading-relaxed uppercase tracking-widest">
                 Nova Hub Support is a dedicated team handling tournament disputes, access issues, and platform feedback. We take every message seriously.
               </p>
             </motion.div>
@@ -860,35 +860,35 @@ export const LandingPage = ({ onOpenAuth, user }) => {
                     }, 2500);
                   }
                 }}
-                className="bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-10 backdrop-blur-sm"
+                className="bg-white/60 border-[3px] border-[#1a1a1a] rounded-[2rem] p-8 md:p-10 shadow-[8px_8px_0px_rgba(26,26,26,1)]"
               >
                 {/* Name + Email row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                   <div>
-                    <label className="text-[10px] uppercase tracking-widest text-white/40 font-bold block mb-2">Your Name</label>
+                    <label className="text-[10px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-2">Your Name</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Arjun Mehta"
-                      className="w-full bg-transparent border-b border-white/20 focus:border-yellow-300 py-3 text-sm font-mono text-white placeholder-white/20 outline-none transition-colors"
+                      className="w-full bg-transparent border-b-2 border-[#1a1a1a]/30 focus:border-[#1a1a1a] py-3 text-sm font-mono text-[#1a1a1a] placeholder-[#1a1a1a]/30 outline-none transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] uppercase tracking-widest text-white/40 font-bold block mb-2">Email Address</label>
+                    <label className="text-[10px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-2">Email Address</label>
                     <input
                       type="email"
                       required
                       placeholder="you@email.com"
-                      className="w-full bg-transparent border-b border-white/20 focus:border-yellow-300 py-3 text-sm font-mono text-white placeholder-white/20 outline-none transition-colors"
+                      className="w-full bg-transparent border-b-2 border-[#1a1a1a]/30 focus:border-[#1a1a1a] py-3 text-sm font-mono text-[#1a1a1a] placeholder-[#1a1a1a]/30 outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Subject */}
                 <div className="mb-5">
-                  <label className="text-[10px] uppercase tracking-widest text-white/40 font-bold block mb-2">Subject / Topic</label>
+                  <label className="text-[10px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-2">Subject / Topic</label>
                   <select
-                    className="w-full bg-[#1a1a1a] border-b border-white/20 focus:border-yellow-300 py-3 text-sm font-mono text-white/80 outline-none transition-colors appearance-none cursor-pointer"
+                    className="w-full bg-white/50 border-b-2 border-[#1a1a1a]/30 focus:border-[#1a1a1a] py-3 text-sm font-mono text-[#1a1a1a] outline-none transition-colors appearance-none cursor-pointer"
                   >
                     <option value="">— Select a topic —</option>
                     <option>Tournament Registration Issue</option>
@@ -903,24 +903,24 @@ export const LandingPage = ({ onOpenAuth, user }) => {
 
                 {/* Message */}
                 <div className="mb-8">
-                  <label className="text-[10px] uppercase tracking-widest text-white/40 font-bold block mb-2">Your Message</label>
+                  <label className="text-[10px] uppercase tracking-widest text-[#1a1a1a]/60 font-bold block mb-2">Your Message</label>
                   <textarea
                     required
                     rows={5}
                     placeholder="Describe your issue or question in detail..."
-                    className="w-full bg-transparent border border-white/10 focus:border-yellow-300 rounded-xl p-4 text-sm font-mono text-white placeholder-white/20 outline-none resize-none transition-colors"
+                    className="w-full bg-white/40 border-[2px] border-[#1a1a1a]/20 focus:border-[#1a1a1a] rounded-xl p-4 text-sm font-mono text-[#1a1a1a] placeholder-[#1a1a1a]/30 outline-none resize-none transition-colors"
                   />
                 </div>
 
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full bg-yellow-200 hover:bg-yellow-300 text-[#1a1a1a] font-black uppercase tracking-wider text-sm py-4 rounded-xl transition-all shadow-[6px_6px_0px_rgba(255,255,255,0.08)] hover:shadow-[2px_2px_0px_rgba(255,255,255,0.08)] hover:translate-x-1 hover:translate-y-1 border-[3px] border-yellow-300"
+                  className="w-full bg-yellow-200 hover:bg-yellow-300 text-[#1a1a1a] font-black uppercase tracking-wider text-sm py-4 rounded-xl transition-all shadow-[6px_6px_0px_rgba(26,26,26,1)] hover:shadow-[2px_2px_0px_rgba(26,26,26,1)] hover:translate-x-1 hover:translate-y-1 border-[3px] border-[#1a1a1a]"
                 >
                   Send Message →
                 </button>
 
-                <p className="text-[9px] font-mono text-white/20 uppercase tracking-widest text-center mt-5">
+                <p className="text-[9px] font-mono text-[#1a1a1a]/30 uppercase tracking-widest text-center mt-5">
                   Your data is confidential. We will never share your information with third parties.
                 </p>
               </form>
