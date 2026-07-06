@@ -22,7 +22,9 @@ export const App = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/auth/me`);
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+          credentials: 'include'
+        });
         if (res.ok) {
           const data = await res.json();
           setUser(data);
@@ -38,7 +40,10 @@ export const App = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST' });
+      await fetch(`${API_BASE_URL}/api/auth/logout`, { 
+        method: 'POST',
+        credentials: 'include'
+      });
       setUser(null);
     } catch (err) {
       console.error(err);

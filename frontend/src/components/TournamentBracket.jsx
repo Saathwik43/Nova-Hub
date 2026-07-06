@@ -47,7 +47,7 @@ export const TournamentBracket = ({ matches = [], onUpdateMatch, isHost = false 
   // Helper names
   const getTeamName = (teamObj) => {
     if (!teamObj) return 'TBD';
-    return teamObj.activeTeam || teamObj.username || 'Participant';
+    return teamObj.teamName || teamObj.activeTeam || teamObj.username || 'Participant';
   };
 
   return (

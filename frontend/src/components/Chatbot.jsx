@@ -29,15 +29,30 @@ const Chatbot = () => {
 
     // Simulate Gemini 2.5 Flash rapid response
     setTimeout(() => {
-      let aiResponse = "I can definitely help with that! Nova Hub is designed to make sports management seamless. Would you like to host a tournament or join an existing one?";
+      let aiResponse = "I can definitely help with that! Nova Hub supports both physical sports and online esports. Would you like to host a tournament or join an existing one?";
       
       const lowerInput = newUserMsg.text.toLowerCase();
+
       if (lowerInput.includes('host') || lowerInput.includes('create')) {
-        aiResponse = "To host a tournament, you can click the 'Host Event' button on the dashboard. You'll need to specify the sport, dates, and ground coordinates.";
+        aiResponse = "To host a tournament, click 'Host Event' in the dashboard. You can choose from physical sports (Cricket, Football, etc.) or online esports (Valorant, BGMI, Free Fire, Chess). Fill in the event details and launch!";
       } else if (lowerInput.includes('join') || lowerInput.includes('play')) {
-        aiResponse = "Looking to play? Head over to the 'Join Tournament' section to see a grid of active local matches. You can register your team roster there!";
+        aiResponse = "Looking to play? Head to 'Join Tournament' to see active local and online matches. Register your team roster or solo profile to get started!";
+      } else if (lowerInput.includes('valorant') || lowerInput.includes('valo')) {
+        aiResponse = "🎯 Valorant is fully supported! Our Valorant Showdown features 5v5 best-of-3 online matches with anti-cheat monitoring. Check the tournament page for live match scores and past winners!";
+      } else if (lowerInput.includes('bgmi') || lowerInput.includes('pubg')) {
+        aiResponse = "🔫 BGMI/PUBG is live on Nova Hub! Squad-based tournaments with 25 teams of 4. Points system across 6 matches. Android/iOS only — no emulators. Check the BGMI Battlegrounds page for details!";
+      } else if (lowerInput.includes('free fire') || lowerInput.includes('freefire') || lowerInput.includes('ff')) {
+        aiResponse = "🔥 Free Fire Masters is our flagship battle royale event! 20 squads compete on Bermuda and Kalahari maps with kill bonuses. Grandmaster accounts required. Check the Free Fire page!";
+      } else if (lowerInput.includes('chess')) {
+        aiResponse = "♟️ We host Online Chess Leagues in Blitz format (5+2 increment)! 32-player Swiss system over 7 rounds. Accounts verified via chess.com. ELO-based seeding for top players!";
       } else if (lowerInput.includes('cricket') || lowerInput.includes('football') || lowerInput.includes('basketball') || lowerInput.includes('badminton')) {
-        aiResponse = "We fully support that sport! You can check out live match formats and past winners on the dedicated tournament pages.";
+        aiResponse = "🏆 We fully support that sport! Check out the dedicated tournament page for live match formats, live scores, and past winners. You can also register your team directly from there!";
+      } else if (lowerInput.includes('esports') || lowerInput.includes('online') || lowerInput.includes('game')) {
+        aiResponse = "🎮 Nova Hub supports 4 major online games: Valorant (5v5 FPS), BGMI (Battle Royale), Free Fire (Squad BR), and Chess (Blitz). Click any esports card on the homepage to explore!";
+      } else if (lowerInput.includes('prize') || lowerInput.includes('money') || lowerInput.includes('win')) {
+        aiResponse = "🏆 Prize pools vary by tournament! The host sets the prize pool when creating an event. For online esports like Free Fire, cash prizes are distributed to top 3 squads. Check individual event pages for details!";
+      } else if (lowerInput.includes('register') || lowerInput.includes('sign up') || lowerInput.includes('account')) {
+        aiResponse = "To register, click 'Sign In' in the top navbar and create an account. Once logged in, you can join tournaments as a participant or switch to host mode to create your own events!";
       }
 
       setMessages(prev => [...prev, { id: Date.now() + 1, text: aiResponse, sender: 'ai' }]);

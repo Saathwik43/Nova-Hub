@@ -73,7 +73,8 @@ export const TeamRegistration = ({ isOpen, onClose, tournament, apiBaseUrl, onRe
       const res = await fetch(`${apiBaseUrl}/api/tournaments/${tournament._id}/join`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        credentials: 'include'
       });
       const data = await res.json();
 

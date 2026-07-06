@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 
 import authRoutes from './routes/authRoutes.js';
 import tournamentRoutes from './routes/tournamentRoutes.js';
+import matchRoutes from './routes/matchRoutes.js';
 
 dotenv.config();
 
@@ -28,11 +29,13 @@ app.use(cookieParser());
 // Routing mappings
 app.use('/api/auth', authRoutes);
 app.use('/api/tournaments', tournamentRoutes);
+app.use('/api/matches', matchRoutes);
 
 // Socket.io initialization
 const io = new Server(server, {
   cors: corsOptions
 });
+app.set('io', io);
 
 const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/novahub';
@@ -113,6 +116,22 @@ mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 2000 })
           teamSize: 11,
           prizePool: 50000,
           entryFee: 500,
+          status: 'open',
+          registeredTeams: []
+        });
+        tournamentsDb.push({
+          _id: 'mock-t-4',
+          title: 'Veloce Need for Speed Grand Prix',
+          category: 'racing',
+          gameName: 'Need for Speed',
+          rules: 'Standard racing rules. No wall riding allowed.',
+          venueType: 'online',
+          venueDetails: { serverRegion: 'Europe West', lobbyCode: 'LBY-NFS99' },
+          format: 'single-elimination',
+          maxTeams: 4,
+          teamSize: 1,
+          prizePool: 10000,
+          entryFee: 50,
           status: 'open',
           registeredTeams: []
         });

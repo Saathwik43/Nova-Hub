@@ -22,7 +22,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* Sticky Left Monospace Badge */}
       <div className="fixed left-6 top-1/2 -translate-y-1/2 -rotate-90 origin-left z-50 pointer-events-none hidden md:block">
         <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#1a1a1a] bg-yellow-200 border-2 border-[#1a1a1a] px-3 py-1 shadow-[2px_2px_0px_rgba(26,26,26,1)]">
-          ★ NOVA HUB // PHYSICAL SPORTS PLATFORM // EST. 2026
+          ★ NOVA HUB // SPORTS &amp; ESPORTS PLATFORM // EST. 2026
         </span>
       </div>
 
@@ -85,7 +85,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
           <div className="w-full max-w-sm">
             {user ? (
               <button
-                onClick={() => onNavigate('dashboard')}
+                onClick={() => navigate('/dashboard')}
                 className="w-full text-center bg-yellow-200 hover:bg-yellow-300 border-[3px] border-[#1a1a1a] py-4 rounded-2xl font-bold uppercase tracking-wider text-xs shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] hover:shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] hover:translate-x-1 hover:translate-y-1 transition-all flex items-center justify-center gap-2 interactive-target"
               >
                 Go to Dashboard Console <ArrowRight className="w-4 h-4" />

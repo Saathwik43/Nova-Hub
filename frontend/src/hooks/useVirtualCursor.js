@@ -6,6 +6,11 @@ export const useVirtualCursor = () => {
   const [cursorType, setCursorType] = useState('default'); // 'default', 'button', 'card', 'node'
 
   useEffect(() => {
+    // Return early if touch device is detected
+    if (typeof window !== 'undefined' && 'ontouchstart' in window) {
+      return;
+    }
+
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };

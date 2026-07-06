@@ -1,9 +1,92 @@
 import express from 'express';
 import Tournament from '../models/Tournament.js';
+import Match from '../models/Match.js';
 import { authenticateToken } from './authRoutes.js';
-import { tournamentsDb } from './mockStore.js';
+import { tournamentsDb, matchesDb } from './mockStore.js';
 
 const router = express.Router();
+
+// Helpers to auto-generate single elimination match bracket structure
+const generateMatchesMock = (tournament) => {
+  const maxTeams = tournament.maxTeams;
+  const numRounds = Math.log2(maxTeams);
+
+  // Generate round 1 matches
+  for (let i = 0; i < maxTeams / 2; i++) {
+    const team1 = tournament.registeredTeams[2 * i];
+    const team2 = tournament.registeredTeams[2 * i + 1];
+    matchesDb.push({
+      _id: 'mock-match-' + Math.random().toString(36).substring(2, 9),
+      tournamentId: tournament._id,
+      roundNumber: 1,
+      matchIndex: i,
+      team1Id: team1._id || team1.registrationToken,
+      team2Id: team2._id || team2.registrationToken,
+      scores: { team1Kills: 0, team2Kills: 0, team1Placement: 0, team2Placement: 0 },
+      status: 'scheduled',
+      winnerId: null
+    });
+  }
+
+  // Generate empty subsequent round matches
+  for (let r = 2; r <= numRounds; r++) {
+    const numMatchesInRound = maxTeams / Math.pow(2, r);
+    for (let i = 0; i < numMatchesInRound; i++) {
+      matchesDb.push({
+        _id: 'mock-match-' + Math.random().toString(36).substring(2, 9),
+        tournamentId: tournament._id,
+        roundNumber: r,
+        matchIndex: i,
+        team1Id: null,
+        team2Id: null,
+        scores: { team1Kills: 0, team2Kills: 0, team1Placement: 0, team2Placement: 0 },
+        status: 'scheduled',
+        winnerId: null
+      });
+    }
+  }
+};
+
+const generateMatchesMongoose = async (tournament) => {
+  const maxTeams = tournament.maxTeams;
+  const numRounds = Math.log2(maxTeams);
+  const matchesToInsert = [];
+
+  // Generate round 1 matches
+  for (let i = 0; i < maxTeams / 2; i++) {
+    const team1 = tournament.registeredTeams[2 * i];
+    const team2 = tournament.registeredTeams[2 * i + 1];
+    matchesToInsert.push({
+      tournamentId: tournament._id,
+      roundNumber: 1,
+      matchIndex: i,
+      team1Id: team1._id.toString(),
+      team2Id: team2._id.toString(),
+      scores: { team1Kills: 0, team2Kills: 0, team1Placement: 0, team2Placement: 0 },
+      status: 'scheduled',
+      winnerId: null
+    });
+  }
+
+  // Generate empty subsequent round matches
+  for (let r = 2; r <= numRounds; r++) {
+    const numMatchesInRound = maxTeams / Math.pow(2, r);
+    for (let i = 0; i < numMatchesInRound; i++) {
+      matchesToInsert.push({
+        tournamentId: tournament._id,
+        roundNumber: r,
+        matchIndex: i,
+        team1Id: null,
+        team2Id: null,
+        scores: { team1Kills: 0, team2Kills: 0, team1Placement: 0, team2Placement: 0 },
+        status: 'scheduled',
+        winnerId: null
+      });
+    }
+  }
+
+  await Match.insertMany(matchesToInsert);
+};
 
 // Get all tournaments
 router.get('/', async (req, res) => {
@@ -19,6 +102,65 @@ router.get('/', async (req, res) => {
     res.status(200).json(tournaments);
   } catch (err) {
     res.status(500).json({ message: 'Error retrieving tournaments list', error: err.message });
+  }
+});
+
+// Get tournament matches
+router.get('/:id/matches', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // MOCK DB MODE
+    if (process.env.USE_MOCK_DB === 'true') {
+      const tournament = tournamentsDb.find(t => t._id === id);
+      if (!tournament) return res.status(404).json({ message: 'Tournament not found' });
+
+      const matches = matchesDb.filter(m => m.tournamentId === id);
+      const populatedMatches = matches.map(m => {
+        const mObj = { ...m };
+        if (mObj.team1Id) {
+          const t1 = tournament.registeredTeams.find(t => t._id === mObj.team1Id || t.registrationToken === mObj.team1Id);
+          if (t1) mObj.team1Id = t1;
+        }
+        if (mObj.team2Id) {
+          const t2 = tournament.registeredTeams.find(t => t._id === mObj.team2Id || t.registrationToken === mObj.team2Id);
+          if (t2) mObj.team2Id = t2;
+        }
+        if (mObj.winnerId) {
+          const w = tournament.registeredTeams.find(t => t._id === mObj.winnerId || t.registrationToken === mObj.winnerId);
+          if (w) mObj.winnerId = w;
+        }
+        return mObj;
+      });
+
+      return res.status(200).json(populatedMatches);
+    }
+
+    // MONGOOSE DB FLOW
+    const tournament = await Tournament.findById(id);
+    if (!tournament) return res.status(404).json({ message: 'Tournament not found' });
+
+    const matches = await Match.find({ tournamentId: id }).sort({ roundNumber: 1, matchIndex: 1 });
+    const populatedMatches = matches.map(m => {
+      const mObj = m.toObject();
+      if (mObj.team1Id) {
+        const t1 = tournament.registeredTeams.find(t => t._id.toString() === mObj.team1Id.toString());
+        if (t1) mObj.team1Id = t1;
+      }
+      if (mObj.team2Id) {
+        const t2 = tournament.registeredTeams.find(t => t._id.toString() === mObj.team2Id.toString());
+        if (t2) mObj.team2Id = t2;
+      }
+      if (mObj.winnerId) {
+        const w = tournament.registeredTeams.find(t => t._id.toString() === mObj.winnerId.toString());
+        if (w) mObj.winnerId = w;
+      }
+      return mObj;
+    });
+
+    res.status(200).json(populatedMatches);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving matches list', error: err.message });
   }
 });
 
@@ -141,6 +283,30 @@ router.post('/:id/join', authenticateToken, async (req, res) => {
 
       if (tournament.registeredTeams.length === tournament.maxTeams) {
         tournament.status = 'ongoing';
+        generateMatchesMock(tournament);
+
+        // Broadcast real-time update
+        const io = req.app.get('io');
+        if (io) {
+          const matches = matchesDb.filter(m => m.tournamentId === tournament._id);
+          const populatedMatches = matches.map(m => {
+            const mObj = { ...m };
+            if (mObj.team1Id) {
+              const t1 = tournament.registeredTeams.find(t => t._id === mObj.team1Id || t.registrationToken === mObj.team1Id);
+              if (t1) mObj.team1Id = t1;
+            }
+            if (mObj.team2Id) {
+              const t2 = tournament.registeredTeams.find(t => t._id === mObj.team2Id || t.registrationToken === mObj.team2Id);
+              if (t2) mObj.team2Id = t2;
+            }
+            if (mObj.winnerId) {
+              const w = tournament.registeredTeams.find(t => t._id === mObj.winnerId || t.registrationToken === mObj.winnerId);
+              if (w) mObj.winnerId = w;
+            }
+            return mObj;
+          });
+          io.emit('tournamentUpdate', { tournament, matches: populatedMatches });
+        }
       }
 
       const venuePassDetails = tournament.venueType === 'online'
@@ -177,6 +343,30 @@ router.post('/:id/join', authenticateToken, async (req, res) => {
 
     if (tournament.registeredTeams.length === tournament.maxTeams) {
       tournament.status = 'ongoing';
+      await generateMatchesMongoose(tournament);
+
+      // Broadcast real-time update
+      const io = req.app.get('io');
+      if (io) {
+        const matches = await Match.find({ tournamentId: tournament._id }).sort({ roundNumber: 1, matchIndex: 1 });
+        const populatedMatches = matches.map(m => {
+          const mObj = m.toObject();
+          if (mObj.team1Id) {
+            const t1 = tournament.registeredTeams.find(t => t._id.toString() === mObj.team1Id.toString());
+            if (t1) mObj.team1Id = t1;
+          }
+          if (mObj.team2Id) {
+            const t2 = tournament.registeredTeams.find(t => t._id.toString() === mObj.team2Id.toString());
+            if (t2) mObj.team2Id = t2;
+          }
+          if (mObj.winnerId) {
+            const w = tournament.registeredTeams.find(t => t._id.toString() === mObj.winnerId.toString());
+            if (w) mObj.winnerId = w;
+          }
+          return mObj;
+        });
+        io.emit('tournamentUpdate', { tournament, matches: populatedMatches });
+      }
     }
 
     await tournament.save();

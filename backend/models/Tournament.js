@@ -25,7 +25,7 @@ const tournamentSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ['esports', 'sports', 'academic'],
+    enum: ['esports', 'sports', 'academic', 'racing'],
     required: true
   },
   gameName: {

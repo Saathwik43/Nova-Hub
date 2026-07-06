@@ -27,7 +27,7 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
   // Load Host's Tournaments
   const loadTournaments = async () => {
     try {
-      const res = await fetch(`${apiBaseUrl}/api/tournaments`);
+      const res = await fetch(`${apiBaseUrl}/api/tournaments`, { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         // Filter by current host
@@ -46,7 +46,7 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
   const loadMatches = async (tourneyId) => {
     if (!tourneyId) return;
     try {
-      const res = await fetch(`${apiBaseUrl}/api/tournaments/${tourneyId}/matches`);
+      const res = await fetch(`${apiBaseUrl}/api/tournaments/${tourneyId}/matches`, { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setMatches(data);
@@ -104,7 +104,8 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
       const res = await fetch(`${apiBaseUrl}/api/tournaments/create`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
+        credentials: 'include'
       });
       if (res.ok) {
         const data = await res.json();
@@ -128,7 +129,8 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
       const res = await fetch(`${apiBaseUrl}/api/matches/${matchId}/score`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(scorePayload)
+        body: JSON.stringify(scorePayload),
+        credentials: 'include'
       });
       if (res.ok) {
         loadMatches(selectedTournament._id);
@@ -229,6 +231,9 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
                   <option value="Free Fire">Free Fire</option>
                   <option value="BGMI">BGMI</option>
                   <option value="Apex Legends">Apex Legends</option>
+                  <option value="Need for Speed">Need for Speed</option>
+                  <option value="Asphalt 9">Asphalt 9</option>
+                  <option value="F1 2026">F1 2026</option>
                 </select>
               </div>
             </div>

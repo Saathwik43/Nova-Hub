@@ -16,7 +16,7 @@ export const ParticipantDashboard = ({ apiBaseUrl, socket, user }) => {
   // Load All Tournaments
   const loadTournaments = async () => {
     try {
-      const res = await fetch(`${apiBaseUrl}/api/tournaments`);
+      const res = await fetch(`${apiBaseUrl}/api/tournaments`, { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setTournaments(data);
@@ -34,7 +34,7 @@ export const ParticipantDashboard = ({ apiBaseUrl, socket, user }) => {
   const loadMatches = async (tourneyId) => {
     if (!tourneyId) return;
     try {
-      const res = await fetch(`${apiBaseUrl}/api/tournaments/${tourneyId}/matches`);
+      const res = await fetch(`${apiBaseUrl}/api/tournaments/${tourneyId}/matches`, { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setMatches(data);
@@ -85,7 +85,8 @@ export const ParticipantDashboard = ({ apiBaseUrl, socket, user }) => {
     try {
       const res = await fetch(`${apiBaseUrl}/api/tournaments/${tourneyId}/join`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       });
       const data = await res.json();
       if (res.ok) {
@@ -200,6 +201,9 @@ export const ParticipantDashboard = ({ apiBaseUrl, socket, user }) => {
                 <option value="Free Fire">Free Fire</option>
                 <option value="BGMI">BGMI</option>
                 <option value="Apex Legends">Apex Legends</option>
+                <option value="Need for Speed">Need for Speed</option>
+                <option value="Asphalt 9">Asphalt 9</option>
+                <option value="F1 2026">F1 2026</option>
               </select>
             </div>
 
