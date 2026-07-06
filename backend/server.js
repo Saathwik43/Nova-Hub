@@ -18,12 +18,19 @@ const server = http.createServer(app);
 // CORS configurations matching client port
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (curl, mobile apps, etc) or any localhost origin
-    if (!origin || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+    console.log('CORS Origin check request:', origin);
+    // Allow requests with no origin (curl, mobile apps) or any local dev domain
+    if (
+      !origin || 
+      origin.includes('localhost') || 
+      origin.includes('127.0.0.1') || 
+      origin.includes('::1')
+    ) {
       callback(null, true);
     } else if (process.env.CLIENT_URL && origin === process.env.CLIENT_URL) {
       callback(null, true);
     } else {
+      console.warn('Origin blocked by CORS policy:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
