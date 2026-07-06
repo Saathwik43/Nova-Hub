@@ -619,7 +619,12 @@ export const LandingPage = ({ onOpenAuth, user }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Large Photo Card 1 */}
           <div className="h-[28rem] md:h-[36rem] bg-[#222] rounded-[2rem] p-8 flex flex-col justify-end relative overflow-hidden group cursor-pointer shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] group-hover:scale-105 transition-transform duration-700"></div>
+            <img 
+              src="/david.png" 
+              alt="David Van Den Bosch" 
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
             
             <div className="relative z-10 text-white">
               <div className="w-10 h-10 bg-white rounded-md mb-4 flex items-center justify-center shadow-lg"><span className="text-xl">⚽</span></div>
@@ -633,7 +638,12 @@ export const LandingPage = ({ onOpenAuth, user }) => {
 
           {/* Large Photo Card 2 */}
           <div className="h-[28rem] md:h-[36rem] bg-[#222] rounded-[2rem] p-8 flex flex-col justify-end relative overflow-hidden group cursor-pointer shadow-[0_20px_40px_rgba(0,0,0,0.2)]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#332a2a] to-[#1a1a1a] group-hover:scale-105 transition-transform duration-700"></div>
+            <img 
+              src="/rik.png" 
+              alt="Rik Van Wieren" 
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
             
             <div className="relative z-10 text-white">
               <div className="w-10 h-10 bg-[#1a1a1a] border border-white/20 rounded-md mb-4 flex items-center justify-center shadow-lg"><span className="text-xl font-bold">NH</span></div>
