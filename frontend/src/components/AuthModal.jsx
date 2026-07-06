@@ -22,12 +22,17 @@ export const AuthModal = ({ isOpen, onClose, apiBaseUrl, onAuthSuccess }) => {
       : { username, email, password, role };
 
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
       const res = await fetch(`${apiBaseUrl}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-        credentials: 'include'
+        credentials: 'include',
+        signal: controller.signal
       });
+      clearTimeout(timeout);
       const data = await res.json();
 
       if (res.ok) {
@@ -37,8 +42,11 @@ export const AuthModal = ({ isOpen, onClose, apiBaseUrl, onAuthSuccess }) => {
         setError(data.message || 'Authentication failed. Please verify credentials.');
       }
     } catch (err) {
-      console.error(err);
-      setError('Connection failure. Check if backend API server is online.');
+      if (err.name === 'AbortError') {
+        setError('Request timed out. Please ensure the backend server is running on port 5000 and try again.');
+      } else {
+        setError('Cannot reach backend server. Please start it with: cd backend && node server.js');
+      }
     } finally {
       setLoading(false);
     }
