@@ -22,11 +22,11 @@ const Navbar = ({ user, handleLogout, handleRoleToggle, setIsAuthOpen }) => {
           Home
         </Link>
         
-        <Link to="/dashboard?tab=host" className="hover:underline decoration-yellow-400 decoration-2 interactive-target">
+        <Link to={user ? "/dashboard?tab=host" : "/?auth=true"} className="hover:underline decoration-yellow-400 decoration-2 interactive-target">
           Host Event
         </Link>
 
-        <Link to="/dashboard?tab=join" className="hover:underline decoration-yellow-400 decoration-2 interactive-target">
+        <Link to={user ? "/dashboard?tab=join" : "/?auth=true"} className="hover:underline decoration-yellow-400 decoration-2 interactive-target">
           Join Tournament
         </Link>
 
@@ -106,14 +106,14 @@ const Navbar = ({ user, handleLogout, handleRoleToggle, setIsAuthOpen }) => {
             Home
           </Link>
           <Link 
-            to="/dashboard?tab=host" 
+            to={user ? "/dashboard?tab=host" : "/?auth=true"} 
             className="hover:underline decoration-yellow-400 decoration-2 py-2 interactive-target"
             onClick={() => setIsMobileOpen(false)}
           >
             Host Event
           </Link>
           <Link 
-            to="/dashboard?tab=join" 
+            to={user ? "/dashboard?tab=join" : "/?auth=true"} 
             className="hover:underline decoration-yellow-400 decoration-2 py-2 interactive-target"
             onClick={() => setIsMobileOpen(false)}
           >

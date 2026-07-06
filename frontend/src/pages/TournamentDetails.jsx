@@ -164,7 +164,7 @@ const tournamentData = {
   }
 };
 
-const TournamentDetails = () => {
+const TournamentDetails = ({ user }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const data = tournamentData[id];
@@ -274,11 +274,11 @@ const TournamentDetails = () => {
               transition={{ delay: 0.2 }}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              <button onClick={() => navigate('/dashboard?tab=join')} className="bg-[#baffc9] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
+              <button onClick={() => navigate(user ? '/dashboard?tab=join' : '/?auth=true')} className="bg-[#baffc9] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
                 <Users className="w-8 h-8" />
                 <span className="font-bold font-display uppercase text-xl">Register Team</span>
               </button>
-              <button onClick={() => navigate('/dashboard?tab=host')} className="bg-[#fcebb6] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
+              <button onClick={() => navigate(user ? '/dashboard?tab=host' : '/?auth=true')} className="bg-[#fcebb6] border-[3px] border-[#1a1a1a] p-6 rounded-2xl flex flex-col items-center justify-center gap-3 hover:-translate-y-1 transition-transform shadow-[4px_4px_0px_rgba(26,26,26,1)]">
                 <CalendarDays className="w-8 h-8" />
                 <span className="font-bold font-display uppercase text-xl">Host Match</span>
               </button>

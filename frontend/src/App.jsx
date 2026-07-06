@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { LogOut, ArrowRight, User, ShieldAlert } from 'lucide-react';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
@@ -10,6 +10,23 @@ import VirtualCursor from './components/VirtualCursor';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+
+// Detect query parameters inside router to auto-open Sign Up / Sign In modal
+const AuthQueryHandler = ({ setIsAuthOpen }) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('auth') === 'true') {
+      setIsAuthOpen(true);
+      // clean up URL search params without reload
+      const newSearch = location.search.replace(/[?&]auth=true/, '').replace(/^&/, '?');
+      window.history.replaceState({}, document.title, location.pathname + newSearch);
+    }
+  }, [location, setIsAuthOpen]);
+
+  return null;
+};
 
 const API_BASE_URL = 'http://localhost:5000';
 
@@ -70,6 +87,9 @@ export const App = () => {
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-[#c4e4e3] text-[#1a1a1a] font-mono selection:bg-yellow-300 relative overflow-x-hidden">
+        {/* Helper to open auth modal when guest lands on ?auth=true */}
+        <AuthQueryHandler setIsAuthOpen={setIsAuthOpen} />
+
         {/* Retro Custom Cursor Overlay */}
         <VirtualCursor />
 
@@ -106,11 +126,11 @@ export const App = () => {
                     onRoleToggle={handleRoleToggle}
                   />
                 ) : (
-                  <Navigate to="/" replace />
+                  <Navigate to="/?auth=true" replace />
                 )
               }
             />
-            <Route path="/tournament/:id" element={<TournamentDetails />} />
+            <Route path="/tournament/:id" element={<TournamentDetails user={user} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
