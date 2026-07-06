@@ -115,6 +115,52 @@ const tournamentData = {
       { name: 'Blitz Masters 2025', winner: 'Arjun Verma', runnerUp: 'Kiran Rao', date: 'May 2025' },
       { name: 'Knight Open 2024', winner: 'Priya Shah', runnerUp: 'Amit Das', date: 'Dec 2024' }
     ]
+  },
+  'car-racing': {
+    title: 'Veloce GP Series',
+    tags: ['racing', 'car', 'time-trial', 'online'],
+    color: 'bg-[#ef4444]', textColor: 'text-[#ef4444]', emoji: '🚗',
+    type: 'online',
+    gameDetails: 'High-octane online car racing tournament featuring 4 drivers in single-elimination time-trial format. Drivers compete across 5 laps on the Europa Drift circuit. Top speed recorded: 287 km/h. No wall riding allowed. Points awarded for fastest lap, clean overtakes, and podium finishes.',
+    liveTournaments: [
+      { name: 'Semi Final - Europa Drift', status: 'LIVE', team1: 'Speed Demon #7', team2: 'Nova Racer #3', score: 'Lap 3/5', time: '287 km/h' },
+      { name: 'Qualifying Round', status: 'LIVE', team1: 'Turbo Ghost', team2: 'Iron Wheel', score: 'Lap 1/5', time: '241 km/h' }
+    ],
+    pastTournaments: [
+      { name: 'Veloce Grand Prix S2', winner: 'Speed Demon', runnerUp: 'Nova Racer', date: 'June 2025' },
+      { name: 'Night Circuit Cup 2024', winner: 'Iron Wheel', runnerUp: 'Turbo Ghost', date: 'Dec 2024' },
+      { name: 'Sprint Series Open 2024', winner: 'Blitz Driver', runnerUp: 'Speed Demon', date: 'Aug 2024' }
+    ]
+  },
+  'bike-racing': {
+    title: 'Moto GP Pro Tour',
+    tags: ['racing', 'bike', 'moto', 'online'],
+    color: 'bg-[#f97316]', textColor: 'text-[#f97316]', emoji: '🏍️',
+    type: 'online',
+    gameDetails: 'Adrenaline-fueled online Moto GP tournament with 4 riders in a single-elimination bracket. Riders race across 4 rounds on the Himalayan Ridge virtual track. Safe passing rules and lane discipline strictly enforced. Top leaning angle recorded: 58°. Time trial and head-to-head modes available.',
+    liveTournaments: [
+      { name: 'Round 2 - Himalayan Ridge', status: 'LIVE', team1: 'Moto King #1', team2: 'Road Phantom', score: 'Round 2/4', time: '195 km/h' }
+    ],
+    pastTournaments: [
+      { name: 'Moto GP Pro Season 1', winner: 'Road Phantom', runnerUp: 'Moto King', date: 'May 2025' },
+      { name: 'Thunderbike Open 2024', winner: 'Speed Biker', runnerUp: 'Nova Rider', date: 'Nov 2024' },
+      { name: 'Weekend Throttle Cup', winner: 'Moto King', runnerUp: 'Lean Machine', date: 'March 2025' }
+    ]
+  },
+  'cycle-racing': {
+    title: 'Tour de Nova Classic',
+    tags: ['racing', 'cycle', 'gps', 'velodrome'],
+    color: 'bg-[#22c55e]', textColor: 'text-[#22c55e]', emoji: '🚴',
+    type: 'physical',
+    gameDetails: 'Premier cycle racing championship held at the Sector 4 Velodrome, HubCity. 4-rider single-elimination bracket across a 35 km route. GPS tracking active throughout — all riders fitted with approved trackers. Helmets and safety gear mandatory. Points for stage wins, sprint bonuses, and mountain classifications.',
+    liveTournaments: [
+      { name: 'Stage 2 - Velodrome Sprint', status: 'LIVE', team1: 'Pedal Force', team2: 'Chain Breaker', score: 'KM 18/35', time: '54.2 km/h' }
+    ],
+    pastTournaments: [
+      { name: 'Tour de Nova Edition 1', winner: 'Pedal Force', runnerUp: 'Cycle Storm', date: 'April 2025' },
+      { name: 'HubCity Gran Fondo 2024', winner: 'Chain Breaker', runnerUp: 'Gear Grinder', date: 'Oct 2024' },
+      { name: 'Velodrome Sprint Classic', winner: 'Cycle Storm', runnerUp: 'Pedal Force', date: 'Jan 2025' }
+    ]
   }
 };
 
