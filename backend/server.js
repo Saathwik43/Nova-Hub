@@ -135,6 +135,38 @@ mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 2000 })
           status: 'open',
           registeredTeams: []
         });
+        tournamentsDb.push({
+          _id: 'mock-t-5',
+          title: 'Moto GP Pro Tour',
+          category: 'racing',
+          gameName: 'Bike Racing',
+          rules: 'Time trial format. Safe passing rules enforce lane-discipline.',
+          venueType: 'online',
+          venueDetails: { serverRegion: 'North America', lobbyCode: 'LBY-MGP12' },
+          format: 'single-elimination',
+          maxTeams: 4,
+          teamSize: 1,
+          prizePool: 15000,
+          entryFee: 75,
+          status: 'open',
+          registeredTeams: []
+        });
+        tournamentsDb.push({
+          _id: 'mock-t-6',
+          title: 'Tour de Nova Cycling Classic',
+          category: 'racing',
+          gameName: 'Cycle Racing',
+          rules: 'GPS tracking active. Helmets and safety check mandatory.',
+          venueType: 'offline',
+          venueDetails: { physicalAddress: 'Sector 4 Velodrome, HubCity', pinCode: '560034', stadiumHall: 'Track Gate 1' },
+          format: 'single-elimination',
+          maxTeams: 4,
+          teamSize: 1,
+          prizePool: 20000,
+          entryFee: 100,
+          status: 'open',
+          registeredTeams: []
+        });
       }
     });
 
