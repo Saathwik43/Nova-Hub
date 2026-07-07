@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Trophy, Sparkles, Pin, Compass, Info, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,67 @@ const mockSportsList = [
 
 export const LandingPage = ({ onOpenAuth, user }) => {
   const navigate = useNavigate();
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('WELCOME');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress(window.scrollY / totalScroll);
+      }
+
+      const sections = [
+        { id: 'hero', name: 'WELCOME' },
+        { id: 'tournaments', name: 'OUR LEAGUES' },
+        { id: 'journey', name: 'START JOURNEY' },
+        { id: 'team', name: 'THE TEAM' },
+        { id: 'case-study', name: 'CASE STUDY' },
+        { id: 'testimonials', name: 'REVIEWS' },
+        { id: 'contact', name: 'CONTACT DESK' }
+      ];
+
+      let current = 'WELCOME';
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.4) {
+            current = section.name;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const totalCols = 30;
+  const filledCols = Math.round(scrollProgress * totalCols);
+
+  const dots = [];
+  for (let r = 0; r < 4; r++) {
+    const rowDots = [];
+    for (let c = 0; c < totalCols; c++) {
+      const isFilled = c < filledCols;
+      rowDots.push(
+        <span 
+          key={c} 
+          className={`w-[5px] h-[5px] rounded-sm transition-colors duration-150 ${
+            isFilled ? 'bg-[#1a1a1a]' : 'bg-[#1a1a1a]/15'
+          }`} 
+        />
+      );
+    }
+    dots.push(
+      <div key={r} className="flex gap-[3px]">
+        {rowDots}
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-[#c4e4e3] text-[#1a1a1a] select-none font-mono overflow-x-hidden">
@@ -30,7 +91,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 1: HERO SECTION
          ========================================== */}
-      <section className="min-h-[95vh] flex flex-col md:flex-row items-center justify-between px-8 md:px-24 pt-28 pb-16 relative z-10 gap-12">
+      <section id="hero" className="min-h-[95vh] flex flex-col md:flex-row items-center justify-between px-8 md:px-24 pt-28 pb-16 relative z-10 gap-12">
         {/* Left Typography Block */}
         <div className="w-full md:w-[60%] text-left flex flex-col gap-6">
           <motion.div
@@ -106,7 +167,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 2: PORTFOLIO GRID (A glimpse of our work)
          ========================================== */}
-      <section className="py-24 max-w-6xl mx-auto px-8 relative z-10">
+      <section id="tournaments" className="py-24 max-w-6xl mx-auto px-8 relative z-10">
         <div className="mb-12 max-w-2xl">
           <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#1a1a1a]/50 mb-3">
             <span className="w-5 h-[2px] bg-[#1a1a1a]/30 inline-block" />Our Tournaments
@@ -484,7 +545,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 3: ASYMMETRICAL FEATURES OVERLAPS
          ========================================== */}
-      <section className="py-24 max-w-6xl mx-auto px-8 relative z-10">
+      <section id="journey" className="py-24 max-w-6xl mx-auto px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left rotatable title */}
           <div className="lg:col-span-4 flex items-center justify-start lg:justify-center relative h-16 lg:h-80">
@@ -535,7 +596,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 4: WHO WE ARE
          ========================================== */}
-      <section className="py-24 max-w-6xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
+      <section id="team" className="py-24 max-w-6xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
         <div className="mb-20">
           <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#1a1a1a]/50 mb-3">
             <span className="w-5 h-[2px] bg-[#1a1a1a]/30 inline-block" />The Team
@@ -601,7 +662,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 5: CASE STUDY
          ========================================== */}
-      <section className="py-24 max-w-5xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
+      <section id="case-study" className="py-24 max-w-5xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <div>
             <h2 className="text-4xl md:text-[2.75rem] font-display italic font-bold text-[#1a1a1a] mb-6 max-w-2xl leading-tight">
@@ -713,7 +774,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       {/* ==========================================
           FRAME 6: TESTIMONIALS
          ========================================== */}
-      <section className="py-24 max-w-6xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
+      <section id="testimonials" className="py-24 max-w-6xl mx-auto px-8 relative z-10 border-t border-[#1a1a1a]/10">
         <div className="mb-16">
           <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-[#1a1a1a]/50 mb-3">
             <span className="w-5 h-[2px] bg-[#1a1a1a]/30 inline-block" />Testimonials
@@ -948,6 +1009,16 @@ export const LandingPage = ({ onOpenAuth, user }) => {
           </div>
         </div>
       </section>
+
+      {/* Dynamic Scroll Progress Indicator */}
+      <div className="fixed bottom-6 left-8 z-40 bg-[#c4e4e3]/90 backdrop-blur-sm p-4 border-[3px] border-[#1a1a1a] shadow-[4px_4px_0px_rgba(26,26,26,1)] rounded-2xl hidden md:flex flex-col gap-2 font-mono select-none">
+        <div className="text-[9px] font-black tracking-[0.18em] uppercase text-[#1a1a1a]/80">
+          {activeSection}
+        </div>
+        <div className="flex flex-col gap-[3px]">
+          {dots}
+        </div>
+      </div>
     </div>
   );
 };
