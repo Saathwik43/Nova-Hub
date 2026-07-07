@@ -4,20 +4,33 @@ import HostForm from '../components/HostForm';
 import JoinEventPage from '../components/JoinEventPage';
 import { Trophy, Zap, Users, CalendarDays, TrendingUp, Activity } from 'lucide-react';
 
-const mockStats = [
+const participantStats = [
   { label: 'Matches Played', value: '12', icon: Activity, color: 'bg-[#bde3fb]' },
   { label: 'Win Rate', value: '67%', icon: TrendingUp, color: 'bg-[#baffc9]' },
   { label: 'Trophies Won', value: '3', icon: Trophy, color: 'bg-[#fcebb6]' },
   { label: 'Teams Joined', value: '5', icon: Users, color: 'bg-[#fce4fb]' },
 ];
 
-const mockTournaments = [
+const hostStats = [
+  { label: 'Tournaments Hosted', value: '4', icon: Trophy, color: 'bg-[#fcebb6]' },
+  { label: 'Registered Teams', value: '28', icon: Users, color: 'bg-[#bde3fb]' },
+  { label: 'Active Brackets', value: '3', icon: Activity, color: 'bg-[#fce4fb]' },
+  { label: 'Referee Payouts', value: '₹8,500', icon: Zap, color: 'bg-[#baffc9]' },
+];
+
+const mockParticipantTournaments = [
   { name: 'Summer Cricket Cup', sport: '🏏', status: 'LIVE', match: 'QF Match 1', time: 'Today 4PM', id: 'cricket' },
   { name: 'Valorant Showdown', sport: '🎯', status: 'LIVE', match: 'Semifinals', time: 'Online Now', id: 'valorant' },
   { name: 'BGMI Battlegrounds', sport: '🔫', status: 'UPCOMING', match: 'Match 4 - Erangel', time: 'Sat 8PM', id: 'bgmi' },
   { name: 'City Football Clash', sport: '⚽', status: 'UPCOMING', match: 'Group Stage', time: 'Sat 6PM', id: 'football' },
   { name: 'Online Chess League', sport: '♟️', status: 'COMPLETED', match: 'Round 7 Final', time: 'May 2025', id: 'chess' },
   { name: 'State Badminton', sport: '🏸', status: 'COMPLETED', match: "Men's Singles", time: 'Apr 2025', id: 'badminton' },
+];
+
+const mockHostTournaments = [
+  { name: 'Summer Cricket Cup', sport: '🏏', status: 'LIVE', match: 'Manage QF 1', time: 'Host Console Open', id: 'cricket' },
+  { name: 'City Football Clash', sport: '⚽', status: 'UPCOMING', match: 'Approve Teams', time: 'Host Console Open', id: 'football' },
+  { name: 'Veloce Grand Prix Series', sport: '🏎️', status: 'LIVE', match: 'Leaderboard Sync', time: 'Host Console Open', id: 'car-racing' },
 ];
 
 export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
@@ -38,6 +51,9 @@ export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
 
   const isHost = user?.role === 'host';
   const isParticipant = user?.role === 'participant';
+
+  const stats = isHost ? hostStats : participantStats;
+  const tournaments = isHost ? mockHostTournaments : mockParticipantTournaments;
 
   if (currentPage === 'hostPage') return (
     <div className="min-h-screen bg-[#c4e4e3] flex flex-col items-center pt-32 pb-20 px-8 justify-start font-mono">
@@ -65,7 +81,7 @@ export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {mockStats.map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label} className={`${stat.color} border-[3px] border-[#1a1a1a] rounded-2xl p-5 shadow-[4px_4px_0px_rgba(26,26,26,1)] flex flex-col gap-2`}>
               <stat.icon className="w-5 h-5 opacity-60" />
               <div className="text-3xl font-black font-display">{stat.value}</div>
@@ -114,7 +130,7 @@ export const Dashboard = ({ apiBaseUrl, user, onRoleToggle }) => {
             </button>
           </div>
           <div className="divide-y divide-[#1a1a1a]/10">
-            {mockTournaments.map((t, i) => (
+            {tournaments.map((t, i) => (
               <div key={i} className="px-8 py-5 flex items-center justify-between hover:bg-[#c4e4e3]/30 transition-colors cursor-pointer group" onClick={() => navigate(`/tournament/${t.id}`)}>
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{t.sport}</span>

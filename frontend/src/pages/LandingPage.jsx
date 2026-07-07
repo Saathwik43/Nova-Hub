@@ -865,16 +865,18 @@ export const LandingPage = ({ onOpenAuth, user }) => {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const btn = e.currentTarget.querySelector('button[type=submit]');
+                  const form = e.currentTarget;
+                  const btn = form.querySelector('button[type=submit]');
                   if (btn) {
                     btn.textContent = '✓ Message Sent!';
                     btn.classList.add('bg-green-400');
                     btn.classList.remove('bg-yellow-200', 'hover:bg-yellow-300');
+                    // Reset fields immediately
+                    form.reset();
                     setTimeout(() => {
                       btn.textContent = 'Send Message →';
                       btn.classList.remove('bg-green-400');
                       btn.classList.add('bg-yellow-200', 'hover:bg-yellow-300');
-                      e.currentTarget.reset();
                     }, 2500);
                   }
                 }}
