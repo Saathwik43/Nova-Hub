@@ -15,12 +15,16 @@
 
   /* Primary display headings */
   h1, h2, h3, h4, .serif-font {
-    font-family: 'Playfair Display', serif;
-    letter-spacing: -0.01em;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+    font-style: normal !important;
   }
 
   /* Mono utility classes  */
-  .font-display  { font-family: 'Playfair Display', serif; }
+  .font-display  { 
+    font-family: 'Inter', sans-serif; 
+    font-style: normal !important;
+  }
   .font-mono     { font-family: 'Space Mono', monospace; }
   .font-inter    { font-family: 'Inter', sans-serif; }
 
