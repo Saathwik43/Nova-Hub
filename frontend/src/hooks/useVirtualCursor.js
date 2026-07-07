@@ -24,6 +24,8 @@ export const useVirtualCursor = () => {
         target.closest('a') || 
         target.closest('.interactive-target') || 
         target.closest('[role="button"]') ||
+        target.closest('.cursor-pointer') ||
+        (target instanceof Element && window.getComputedStyle(target).cursor === 'pointer') ||
         target.tagName === 'INPUT' || 
         target.tagName === 'SELECT' || 
         target.tagName === 'TEXTAREA';
@@ -32,7 +34,12 @@ export const useVirtualCursor = () => {
         setHovered(true);
         if (target.closest('.bracket-node')) {
           setCursorType('node');
-        } else if (target.closest('.tournament-card')) {
+        } else if (
+          target.closest('.tournament-card') || 
+          target.closest('[class*="card"]') || 
+          target.closest('[class*="Carousel"]') || 
+          target.closest('[class*="Card"]')
+        ) {
           setCursorType('card');
         } else {
           setCursorType('button');
