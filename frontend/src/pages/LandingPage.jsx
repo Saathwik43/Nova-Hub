@@ -52,7 +52,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const totalCols = 30;
+  const totalCols = 25;
   const filledCols = Math.round(scrollProgress * totalCols);
 
   const dots = [];
@@ -63,14 +63,14 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       rowDots.push(
         <span 
           key={c} 
-          className={`w-[5px] h-[5px] rounded-sm transition-colors duration-150 ${
+          className={`w-[3px] h-[3px] md:w-[4px] md:h-[4px] rounded-sm transition-colors duration-150 ${
             isFilled ? 'bg-[#1a1a1a]' : 'bg-[#1a1a1a]/15'
           }`} 
         />
       );
     }
     dots.push(
-      <div key={r} className="flex gap-[3px]">
+      <div key={r} className="flex gap-[2px] md:gap-[3px]">
         {rowDots}
       </div>
     );
@@ -1011,11 +1011,11 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       </section>
 
       {/* Dynamic Scroll Progress Indicator */}
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 bg-[#c4e4e3]/90 backdrop-blur-sm p-4 border-[3px] border-[#1a1a1a] shadow-[4px_4px_0px_rgba(26,26,26,1)] rounded-2xl hidden md:flex flex-col gap-2 font-mono select-none">
-        <div className="text-[9px] font-black tracking-[0.18em] uppercase text-[#1a1a1a]/80 text-right">
+      <div className="fixed bottom-4 left-4 md:bottom-6 md:left-8 z-40 bg-[#c4e4e3]/95 backdrop-blur-sm p-2.5 md:p-3.5 border-[2px] md:border-[3px] border-[#1a1a1a] shadow-[3px_3px_0px_rgba(26,26,26,1)] md:shadow-[4px_4px_0px_rgba(26,26,26,1)] rounded-xl md:rounded-2xl flex flex-col gap-1 md:gap-1.5 font-mono select-none">
+        <div className="text-[8px] md:text-[9px] font-black tracking-[0.15em] md:tracking-[0.18em] uppercase text-[#1a1a1a]/80">
           {activeSection}
         </div>
-        <div className="flex flex-col gap-[3px] items-end">
+        <div className="flex flex-col gap-[2px] md:gap-[3px]">
           {dots}
         </div>
       </div>
