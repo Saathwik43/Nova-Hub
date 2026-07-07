@@ -1011,11 +1011,11 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       </section>
 
       {/* Dynamic Scroll Progress Indicator */}
-      <div className="fixed bottom-6 left-8 z-40 bg-[#c4e4e3]/90 backdrop-blur-sm p-4 border-[3px] border-[#1a1a1a] shadow-[4px_4px_0px_rgba(26,26,26,1)] rounded-2xl hidden md:flex flex-col gap-2 font-mono select-none">
-        <div className="text-[9px] font-black tracking-[0.18em] uppercase text-[#1a1a1a]/80">
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 bg-[#c4e4e3]/90 backdrop-blur-sm p-4 border-[3px] border-[#1a1a1a] shadow-[4px_4px_0px_rgba(26,26,26,1)] rounded-2xl hidden md:flex flex-col gap-2 font-mono select-none">
+        <div className="text-[9px] font-black tracking-[0.18em] uppercase text-[#1a1a1a]/80 text-right">
           {activeSection}
         </div>
-        <div className="flex flex-col gap-[3px]">
+        <div className="flex flex-col gap-[3px] items-end">
           {dots}
         </div>
       </div>
