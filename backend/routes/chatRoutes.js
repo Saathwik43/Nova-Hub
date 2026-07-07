@@ -53,21 +53,47 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: "Message is required." });
     }
 
-    // Try to run using Google Gemini if API Key is configured
+    // Try to run using Google Gemini or OpenAI if API Key is configured
     if (process.env.GEMINI_API_KEY) {
       try {
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        
-        const systemPrompt = `You are the Nova Assistant, a friendly and smart AI agent for Nova Hub, a sports and esports tournament platform.
+        const apiKey = process.env.GEMINI_API_KEY.trim();
+        if (apiKey.startsWith('sk-')) {
+          // OpenAI API endpoint
+          const openAiRes = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: 'gpt-4o-mini',
+              messages: [
+                { role: 'system', content: 'You are the Nova Assistant, a friendly and smart AI agent for Nova Hub, a sports and esports tournament platform. Keep your response within 2-4 sentences.' },
+                { role: 'user', content: message }
+              ]
+            })
+          });
+          if (openAiRes.ok) {
+            const data = await openAiRes.json();
+            return res.json({ response: data.choices[0].message.content.trim() });
+          } else {
+            console.error("OpenAI API returned an error:", await openAiRes.text());
+          }
+        } else {
+          // Google Gemini API endpoint
+          const genAI = new GoogleGenerativeAI(apiKey);
+          const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+          
+          const systemPrompt = `You are the Nova Assistant, a friendly and smart AI agent for Nova Hub, a sports and esports tournament platform.
 User is asking: "${message}".
 Please answer their question directly, comprehensively, and dynamically. If they ask about sports, esports, hosting, joining, or brackets, explain how to do it in Nova Hub. Keep your response within 2-4 sentences.`;
 
-        const result = await model.generateContent(systemPrompt);
-        const response = await result.response;
-        return res.json({ response: response.text().trim() });
-      } catch (geminiError) {
-        console.error("Gemini API execution error, falling back:", geminiError);
+          const result = await model.generateContent(systemPrompt);
+          const response = await result.response;
+          return res.json({ response: response.text().trim() });
+        }
+      } catch (apiError) {
+        console.error("AI API execution error, falling back:", apiError);
         // Fall back to rule-based on API failure
       }
     }
