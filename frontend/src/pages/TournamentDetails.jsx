@@ -161,6 +161,58 @@ const tournamentData = {
       { name: 'HubCity Gran Fondo 2024', winner: 'Chain Breaker', runnerUp: 'Gear Grinder', date: 'Oct 2024' },
       { name: 'Velodrome Sprint Classic', winner: 'Cycle Storm', runnerUp: 'Pedal Force', date: 'Jan 2025' }
     ]
+  },
+  'school-football': {
+    title: 'Inter-School Football Cup',
+    tags: ['football', 'school', 'junior', 'u-16'],
+    color: 'bg-yellow-200', textColor: 'text-yellow-600', emoji: '🎒',
+    type: 'physical',
+    gameDetails: 'Annual under-16 inter-school football tournament. High school teams from across the city battle it out in a month-long league. Encouraging sportsmanship and building young legends.',
+    liveTournaments: [
+      { name: 'Group Stage Match 4', status: 'LIVE', team1: 'Delhi Public School', team2: 'St. Joseph Academy', score: '1 - 0', time: '52\'' }
+    ],
+    pastTournaments: [
+      { name: 'Junior Cup 2025', winner: 'Delhi Public School', runnerUp: 'Greenwood High', date: 'Feb 2025' }
+    ]
+  },
+  'school-basketball': {
+    title: 'Junior School Basketball Shield',
+    tags: ['basketball', 'school', 'shield', 'u-14'],
+    color: 'bg-yellow-200', textColor: 'text-yellow-600', emoji: '🏀',
+    type: 'physical',
+    gameDetails: 'Under-14 inter-school basketball clash. Junior athletes representing their secondary schools in full-court official matches. Promoted by regional school board associations.',
+    liveTournaments: [
+      { name: 'Quarter Final B', status: 'LIVE', team1: 'Emerald International', team2: 'Army Public School', score: '38 - 34', time: 'Q3 8:00' }
+    ],
+    pastTournaments: [
+      { name: 'School Shield 2025', winner: 'Emerald International', runnerUp: 'YMCA Scholars', date: 'April 2025' }
+    ]
+  },
+  'college-cricket': {
+    title: 'Varsity Cricket Trophy',
+    tags: ['cricket', 'college', 'varsity', 'trophy'],
+    color: 'bg-[#cffafe]', textColor: 'text-blue-600', emoji: '🎓',
+    type: 'physical',
+    gameDetails: 'Inter-collegiate 20-over varsity cricket trophy. Highly competitive matches featuring state-level collegiate players. Supported by national varsity selection scouts.',
+    liveTournaments: [
+      { name: 'Semi Final 2', status: 'LIVE', team1: 'IIT Bangalore', team2: 'RV College of Engineering', score: '142/5 vs 128/6', time: 'Over 18.2' }
+    ],
+    pastTournaments: [
+      { name: 'Varsity Trophy 2025', winner: 'IIT Bangalore', runnerUp: 'PES University', date: 'May 2025' }
+    ]
+  },
+  'college-esports': {
+    title: 'Inter-Collegiate Esports League',
+    tags: ['esports', 'college', 'online', 'gaming'],
+    color: 'bg-[#cffafe]', textColor: 'text-blue-600', emoji: '🎮',
+    type: 'online',
+    gameDetails: 'The ultimate collegiate gaming championship. Universities compete across Valorant, BGMI, and Chess. Official esports points table with campus rankings.',
+    liveTournaments: [
+      { name: 'Valorant Finals', status: 'LIVE', team1: 'BITS Pilani Gaming', team2: 'SRM Esports', score: '11 - 9', time: 'Map 2' }
+    ],
+    pastTournaments: [
+      { name: 'Collegiate Open 2025', winner: 'SRM Esports', runnerUp: 'VIT Gamers', date: 'June 2025' }
+    ]
   }
 };
 

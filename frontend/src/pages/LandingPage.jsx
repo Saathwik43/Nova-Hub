@@ -27,6 +27,8 @@ export const LandingPage = ({ onOpenAuth, user }) => {
       const sections = [
         { id: 'hero', name: 'WELCOME' },
         { id: 'tournaments', name: 'OUR LEAGUES' },
+        { id: 'school-tournaments', name: 'SCHOOL CUPS' },
+        { id: 'college-tournaments', name: 'COLLEGE TROPHIES' },
         { id: 'journey', name: 'START JOURNEY' },
         { id: 'team', name: 'THE TEAM' },
         { id: 'case-study', name: 'CASE STUDY' },
@@ -272,9 +274,18 @@ export const LandingPage = ({ onOpenAuth, user }) => {
         </div>
 
         {/* Online Esports Label */}
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-xs font-black uppercase tracking-widest text-purple-600/70">🎮 Online Esports</span>
-          <div className="flex-1 h-px bg-purple-200"></div>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 mt-16 pt-12 border-t border-[#1a1a1a]/10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-100 border-2 border-[#1a1a1a] shadow-[2px_2px_0px_rgba(26,26,26,1)] rounded-full text-[9px] font-black uppercase tracking-wider text-purple-700 mb-3">
+              🎮 Cyber Arenas
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-black italic text-[#1a1a1a] tracking-tight">
+              Online Esports <span className="text-purple-600">Showdowns</span>
+            </h2>
+            <p className="text-[11px] font-mono text-[#1a1a1a]/60 mt-1 uppercase tracking-wider">
+              Compete globally from your setup. Real-time bracket sync and anti-cheat tracking.
+            </p>
+          </div>
         </div>
 
         {/* 2x2 Grid - Online Games */}
@@ -359,9 +370,18 @@ export const LandingPage = ({ onOpenAuth, user }) => {
         </div>
 
         {/* Racing Tournaments Label */}
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-xs font-black uppercase tracking-widest text-red-600/70">🏁 Racing Tournaments</span>
-          <div className="flex-1 h-px bg-red-200"></div>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 mt-16 pt-12 border-t border-[#1a1a1a]/10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-100 border-2 border-[#1a1a1a] shadow-[2px_2px_0px_rgba(26,26,26,1)] rounded-full text-[9px] font-black uppercase tracking-wider text-red-700 mb-3">
+              🏁 Speed Tracks
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-black italic text-[#1a1a1a] tracking-tight">
+              Racing <span className="text-red-600">Tournaments</span>
+            </h2>
+            <p className="text-[11px] font-mono text-[#1a1a1a]/60 mt-1 uppercase tracking-wider">
+              High-octane time trials, virtual circuits, and leaderboards for speed junkies.
+            </p>
+          </div>
         </div>
 
         {/* Racing Grid - 3 columns */}
@@ -448,6 +468,134 @@ export const LandingPage = ({ onOpenAuth, user }) => {
             </div>
           </div>
 
+        </div>
+
+        {/* School vs School Header */}
+        <div id="school-tournaments" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 mt-16 pt-12 border-t border-[#1a1a1a]/10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-200 border-2 border-[#1a1a1a] shadow-[2px_2px_0px_rgba(26,26,26,1)] rounded-full text-[9px] font-black uppercase tracking-wider text-[#1a1a1a] mb-3">
+              🎒 Junior League
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-black italic text-[#1a1a1a] tracking-tight">
+              School vs School <span className="text-[#e86c3f]">Tournaments</span>
+            </h2>
+            <p className="text-[11px] font-mono text-[#1a1a1a]/60 mt-1 uppercase tracking-wider">
+              High-school battles representing regional bragging rights and legacy shields.
+            </p>
+          </div>
+        </div>
+
+        {/* School Grid - 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          {/* Card 1 - School Football */}
+          <div onClick={() => navigate('/tournament/school-football')} className="border-[3px] border-[#1a1a1a] bg-white rounded-[2rem] p-6 relative flex flex-col justify-end h-80 md:h-96 overflow-hidden group hover:shadow-[8px_8px_0px_rgba(26,26,26,1)] transition-all duration-300 cursor-pointer">
+            <div className="absolute inset-0 bg-[#fef08a]/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            <div className="absolute inset-0 top-0 left-0 right-0 bottom-20 flex items-center justify-center pointer-events-none">
+              <div className="w-56 h-36 bg-yellow-100 border border-yellow-400/30 rounded-xl rotate-[4deg] group-hover:rotate-[2deg] group-hover:scale-105 transition-all duration-500 absolute top-12 left-6 flex flex-col p-4">
+                <div className="flex justify-between items-center text-[10px] text-yellow-700 font-bold mb-2">
+                  <span>🏆 U-16 LEAGUE</span>
+                  <span className="bg-yellow-200 px-1.5 py-0.5 rounded text-[8px]">ACTIVE</span>
+                </div>
+                <div className="text-xs font-bold text-yellow-800 leading-tight">DPS vs St. Joseph's</div>
+                <div className="text-[20px] font-black text-yellow-900 mt-2">1 - 0</div>
+                <div className="mt-auto text-[8px] text-yellow-700/60 uppercase">Live: Over 52 mins</div>
+              </div>
+              <div className="w-24 h-24 bg-yellow-300 rounded-2xl shadow-lg border-4 border-[#1a1a1a] -rotate-[10deg] group-hover:-rotate-[15deg] group-hover:scale-110 transition-all duration-500 absolute bottom-12 right-6 flex flex-col items-center justify-center text-white font-black text-sm tracking-wider">
+                <span className="text-3xl mb-1">⚽</span>JUNIOR
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 px-2">
+              <h3 className="text-xl md:text-2xl font-display italic font-bold text-[#1a1a1a]">Inter-School Football Cup</h3>
+              <span className="text-[10px] md:text-xs font-mono text-[#1a1a1a]/50">football, school, junior</span>
+            </div>
+          </div>
+
+          {/* Card 2 - School Basketball */}
+          <div onClick={() => navigate('/tournament/school-basketball')} className="border-[3px] border-[#1a1a1a] bg-white rounded-[2rem] p-6 relative flex flex-col justify-end h-80 md:h-96 overflow-hidden group hover:shadow-[8px_8px_0px_rgba(26,26,26,1)] transition-all duration-300 cursor-pointer">
+            <div className="absolute inset-0 bg-[#fde047]/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            <div className="absolute inset-0 top-0 left-0 right-0 bottom-20 flex items-center justify-center pointer-events-none">
+              <div className="w-56 h-36 bg-amber-100 border border-amber-400/30 rounded-xl -rotate-[4deg] group-hover:rotate-[2deg] group-hover:scale-105 transition-all duration-500 absolute top-12 left-6 flex flex-col p-4">
+                <div className="flex justify-between items-center text-[10px] text-amber-700 font-bold mb-2">
+                  <span>🏀 U-14 SHIELD</span>
+                  <span className="bg-amber-200 px-1.5 py-0.5 rounded text-[8px]">LIVE</span>
+                </div>
+                <div className="text-xs font-bold text-amber-800 leading-tight">Emerald vs Army School</div>
+                <div className="text-[20px] font-black text-amber-900 mt-2">38 - 34</div>
+                <div className="mt-auto text-[8px] text-amber-700/60 uppercase">Live: Q3 8:00</div>
+              </div>
+              <div className="w-24 h-24 bg-amber-300 rounded-2xl shadow-lg border-4 border-[#1a1a1a] rotate-[10deg] group-hover:rotate-[15deg] group-hover:scale-110 transition-all duration-500 absolute bottom-12 right-6 flex flex-col items-center justify-center text-white font-black text-sm tracking-wider">
+                <span className="text-3xl mb-1">🏀</span>SHIELD
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 px-2">
+              <h3 className="text-xl md:text-2xl font-display italic font-bold text-[#1a1a1a]">Junior School Basketball Shield</h3>
+              <span className="text-[10px] md:text-xs font-mono text-[#1a1a1a]/50">basketball, school, shield</span>
+            </div>
+          </div>
+        </div>
+
+        {/* College vs College Header */}
+        <div id="college-tournaments" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 mt-16 pt-12 border-t border-[#1a1a1a]/10">
+          <div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#cffafe] border-2 border-[#1a1a1a] shadow-[2px_2px_0px_rgba(26,26,26,1)] rounded-full text-[9px] font-black uppercase tracking-wider text-blue-700 mb-3">
+              🎓 Varsity Cup
+            </span>
+            <h2 className="text-3xl md:text-4xl font-display font-black italic text-[#1a1a1a] tracking-tight">
+              College vs College <span className="text-blue-600">Tournaments</span>
+            </h2>
+            <p className="text-[11px] font-mono text-[#1a1a1a]/60 mt-1 uppercase tracking-wider">
+              High-intensity collegiate showdowns, sports scholarships, and campus bragging rights.
+            </p>
+          </div>
+        </div>
+
+        {/* College Grid - 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          {/* Card 1 - College Cricket */}
+          <div onClick={() => navigate('/tournament/college-cricket')} className="border-[3px] border-[#1a1a1a] bg-white rounded-[2rem] p-6 relative flex flex-col justify-end h-80 md:h-96 overflow-hidden group hover:shadow-[8px_8px_0px_rgba(26,26,26,1)] transition-all duration-300 cursor-pointer">
+            <div className="absolute inset-0 bg-blue-100/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            <div className="absolute inset-0 top-0 left-0 right-0 bottom-20 flex items-center justify-center pointer-events-none">
+              <div className="w-56 h-36 bg-blue-50 border border-blue-400/30 rounded-xl rotate-[4deg] group-hover:rotate-[2deg] group-hover:scale-105 transition-all duration-500 absolute top-12 left-6 flex flex-col p-4">
+                <div className="flex justify-between items-center text-[10px] text-blue-700 font-bold mb-2">
+                  <span>🏏 VARSITY CUP</span>
+                  <span className="bg-blue-100 px-1.5 py-0.5 rounded text-[8px]">LIVE</span>
+                </div>
+                <div className="text-xs font-bold text-blue-800 leading-tight">IIT-B vs RV College</div>
+                <div className="text-[16px] font-black text-blue-900 mt-2">142/5 vs 128/6</div>
+                <div className="mt-auto text-[8px] text-blue-700/60 uppercase">Live: Over 18.2</div>
+              </div>
+              <div className="w-24 h-24 bg-blue-300 rounded-2xl shadow-lg border-4 border-[#1a1a1a] -rotate-[10deg] group-hover:-rotate-[15deg] group-hover:scale-110 transition-all duration-500 absolute bottom-12 right-6 flex flex-col items-center justify-center text-white font-black text-sm tracking-wider">
+                <span className="text-3xl mb-1">🏏</span>VARSITY
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 px-2">
+              <h3 className="text-xl md:text-2xl font-display italic font-bold text-[#1a1a1a]">Varsity Cricket Trophy</h3>
+              <span className="text-[10px] md:text-xs font-mono text-[#1a1a1a]/50">cricket, college, varsity</span>
+            </div>
+          </div>
+
+          {/* Card 2 - College Esports */}
+          <div onClick={() => navigate('/tournament/college-esports')} className="border-[3px] border-[#1a1a1a] bg-white rounded-[2rem] p-6 relative flex flex-col justify-end h-80 md:h-96 overflow-hidden group hover:shadow-[8px_8px_0px_rgba(26,26,26,1)] transition-all duration-300 cursor-pointer">
+            <div className="absolute inset-0 bg-[#cffafe]/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            <div className="absolute inset-0 top-0 left-0 right-0 bottom-20 flex items-center justify-center pointer-events-none">
+              <div className="w-56 h-36 bg-[#cffafe]/30 border border-[#cffafe] rounded-xl -rotate-[4deg] group-hover:rotate-[2deg] group-hover:scale-105 transition-all duration-500 absolute top-12 left-6 flex flex-col p-4">
+                <div className="flex justify-between items-center text-[10px] text-cyan-700 font-bold mb-2">
+                  <span>🎮 INTER-VARSITY</span>
+                  <span className="bg-[#cffafe] px-1.5 py-0.5 rounded text-[8px]">VALORANT</span>
+                </div>
+                <div className="text-xs font-bold text-cyan-800 leading-tight">BITS Gaming vs SRM</div>
+                <div className="text-[20px] font-black text-cyan-900 mt-2">11 - 9</div>
+                <div className="mt-auto text-[8px] text-cyan-700/60 uppercase">Live: Map 2 Finals</div>
+              </div>
+              <div className="w-24 h-24 bg-cyan-300 rounded-2xl shadow-lg border-4 border-[#1a1a1a] rotate-[10deg] group-hover:rotate-[15deg] group-hover:scale-110 transition-all duration-500 absolute bottom-12 right-6 flex flex-col items-center justify-center text-white font-black text-sm tracking-wider">
+                <span className="text-3xl mb-1">🎮</span>CAMPUS
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-3 px-2">
+              <h3 className="text-xl md:text-2xl font-display italic font-bold text-[#1a1a1a]">Inter-Collegiate Esports League</h3>
+              <span className="text-[10px] md:text-xs font-mono text-[#1a1a1a]/50">esports, college, gaming</span>
+            </div>
+          </div>
         </div>
 
 

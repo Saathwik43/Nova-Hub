@@ -237,6 +237,10 @@ export const HostDashboard = ({ apiBaseUrl, socket, user }) => {
                   <option value="Car Racing">Car Racing</option>
                   <option value="Bike Racing">Bike Racing</option>
                   <option value="Cycle Racing">Cycle Racing</option>
+                  <option value="School Football">School Football</option>
+                  <option value="School Basketball">School Basketball</option>
+                  <option value="College Cricket">College Cricket</option>
+                  <option value="College Esports">College Esports</option>
                 </select>
               </div>
             </div>
