@@ -216,6 +216,7 @@ export const AuthModal = ({ isOpen, onClose, apiBaseUrl, onAuthSuccess }) => {
                     placeholder="e.g. ApexCaptain"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    autoComplete="username"
                     className="w-full bg-white border-[3px] border-[#1a1a1a] py-3 px-3 pl-10 text-sm font-bold text-[#1a1a1a] focus:bg-yellow-50 outline-none interactive-target rounded-xl"
                   />
                   <User className="w-4 h-4 text-[#1a1a1a] absolute left-3.5 top-3.5 stroke-[2.5]" />
@@ -235,6 +236,7 @@ export const AuthModal = ({ isOpen, onClose, apiBaseUrl, onAuthSuccess }) => {
                   placeholder="name@novahub.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="email"
                   className="w-full bg-white border-[3px] border-[#1a1a1a] py-3 px-3 pl-10 text-sm font-bold text-[#1a1a1a] focus:bg-yellow-50 outline-none interactive-target rounded-xl"
                 />
                 <Mail className="w-4 h-4 text-[#1a1a1a] absolute left-3.5 top-3.5 stroke-[2.5]" />
@@ -254,6 +256,7 @@ export const AuthModal = ({ isOpen, onClose, apiBaseUrl, onAuthSuccess }) => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete={isLogin ? "current-password" : "new-password"}
                   className="w-full bg-white border-[3px] border-[#1a1a1a] py-3 px-3 pl-10 text-sm font-bold text-[#1a1a1a] focus:bg-yellow-50 outline-none font-sans tracking-widest interactive-target rounded-xl"
                 />
                 <KeyRound className="w-4 h-4 text-[#1a1a1a] absolute left-3.5 top-3.5 stroke-[2.5]" />

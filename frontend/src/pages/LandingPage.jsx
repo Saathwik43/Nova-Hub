@@ -1101,6 +1101,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
                       type="text"
                       required
                       placeholder="e.g. Arjun Mehta"
+                      autoComplete="name"
                       className="w-full bg-transparent border-b-2 border-[#1a1a1a]/30 focus:border-[#1a1a1a] py-3 text-sm font-mono text-[#1a1a1a] placeholder-[#1a1a1a]/30 outline-none transition-colors"
                     />
                   </div>
@@ -1112,6 +1113,7 @@ export const LandingPage = ({ onOpenAuth, user }) => {
                       type="email"
                       required
                       placeholder="you@email.com"
+                      autoComplete="email"
                       className="w-full bg-transparent border-b-2 border-[#1a1a1a]/30 focus:border-[#1a1a1a] py-3 text-sm font-mono text-[#1a1a1a] placeholder-[#1a1a1a]/30 outline-none transition-colors"
                     />
                   </div>
