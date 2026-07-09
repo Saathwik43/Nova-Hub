@@ -253,7 +253,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
           try {
             // Dynamic protocol mapping to prevent Mixed Content console errors on HTTPS deployments
             const proto = window.location.protocol === 'https:' ? 'https:' : 'http:';
-            const ipRes = await fetch(`${proto}//api.ipstack.com/check?access_key=16b60da831def3a03750350c4db9b742`);
+            const ipRes = await fetch(`${proto}//api.ipstack.com/check?access_key=47651d924ea80c91082cd1cb8f907e8a`);
             if (ipRes.ok) {
               const ipData = await ipRes.json();
               if (ipData.success === false) {
@@ -288,7 +288,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
           setLocationMethod('Default');
           setLocationName('Bangalore, IN (Default Coords)');
         },
-        { timeout: 5000 }
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
     } else {
       setLocationName('Geolocation unsupported. Mumbai default...');

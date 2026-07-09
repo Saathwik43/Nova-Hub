@@ -29,10 +29,7 @@ const AuthQueryHandler = ({ setIsAuthOpen }) => {
 };
 
 const getApiBaseUrl = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
-  }
-  return 'http://localhost:5000';
+  return import.meta.env.VITE_API_URL || '';
 };
 
 const API_BASE_URL = getApiBaseUrl();
