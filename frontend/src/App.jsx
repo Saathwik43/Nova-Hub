@@ -32,11 +32,7 @@ const getApiBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  const hostname = window.location.hostname;
-  if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]') {
-    return 'http://localhost:5000';
-  }
-  return '';
+  return 'http://localhost:5000';
 };
 
 const API_BASE_URL = getApiBaseUrl();
