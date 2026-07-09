@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Compass, MapPin, Search, Bell, Sliders, AlertTriangle } from 'lucide-react';
+import { Compass, MapPin, Search, Bell, Sliders, AlertTriangle, Radio } from 'lucide-react';
 import TournamentList from './TournamentList';
 import TeamRosterForm from './TeamRosterForm';
+import EventMap from './EventMap';
 
 // Haversine formula to compute distance in km
 const getDistance = (lat1, lon1, lat2, lon2) => {
@@ -19,10 +20,22 @@ const getDistance = (lat1, lon1, lat2, lon2) => {
 
 const deg2rad = (deg) => deg * (Math.PI / 180);
 
+const mockFeedPool = [
+  'Match Shifted: Bangalore Cricket Cup Semifinals moved to 4:30 PM (Rain Delay)',
+  'Opponent Assigned: Bangalore Strikers will face Mumbai Gladiators in Round 1',
+  'Bracket Generation: Free Fire Firestarter Cup brackets have been re-seeded',
+  'Lobby Update: Valorant Match ID 992 lobby code has been refreshed',
+  'Referee Payout Settled: Host Bangalore Cup has released stakes to referee pool',
+  'Score Update: Bangalore Cricket Cup Match 1 ends. Team Bangalore wins by 4 wickets!',
+  'Schedule Revision: Need for Speed Grand Prix Final starts in 10 minutes',
+  'Clans Matrix Assigned: Apex Predators vs Team Velocity is scheduled for tomorrow at 8:00 PM'
+];
+
 export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
   const [tournaments, setTournaments] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [platformFilter, setPlatformFilter] = useState('All');
   
   // Coordinates & Location States
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
@@ -30,6 +43,12 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
   const [locationName, setLocationName] = useState('Locating user...');
   const [radius, setRadius] = useState(100); // Proximity radius in km
   const [showAllPhysical, setShowAllPhysical] = useState(false);
+
+  // Live Alerts Feed State
+  const [liveFeeds, setLiveFeeds] = useState([
+    { id: 1, text: 'System Broadcast: Nova Hub Match Radar initialization successful.', time: '1m ago' },
+    { id: 2, text: 'Schedule Sync: Valorant quarterfinals locked. Check entry tickets for lobby codes.', time: '5m ago' }
+  ]);
 
   // Notifications State
   const [notificationsOn, setNotificationsOn] = useState(false);
@@ -49,7 +68,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
     }
   }, [apiBaseUrl]);
 
-  // Request browser Geolocation and fallback to IP-based coordinates
+  // Request Geolocation and fallback to IP-based coordinates
   const detectLocation = useCallback(() => {
     setLocationMethod('Detecting...');
     setLocationName('Requesting GPS permissions...');
@@ -99,6 +118,25 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
     detectLocation();
     loadTournaments();
   }, [detectLocation, loadTournaments]);
+
+  // Dynamic ticking notification simulation feed
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomMsg = mockFeedPool[Math.floor(Math.random() * mockFeedPool.length)];
+      const newFeed = {
+        id: Date.now(),
+        text: randomMsg,
+        time: 'Just now'
+      };
+      setLiveFeeds(prev => [newFeed, ...prev.slice(0, 4)]);
+      
+      // Notify in toast if alerts are turned ON
+      if (notificationsOn) {
+        triggerInAppToast('Match Updates Feed', randomMsg);
+      }
+    }, 12000);
+    return () => clearInterval(interval);
+  }, [notificationsOn]);
 
   // Manual city coordinates override (for testing proximity routing)
   const handleCityOverride = (city) => {
@@ -225,6 +263,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
   const esportsTournaments = tournaments
     .filter(t => t.venueType === 'online')
     .filter(searchFilter)
+    .filter(t => platformFilter === 'All' || t.venueDetails?.platform === platformFilter)
     .sort((a, b) => {
       const regA = a.venueDetails?.serverRegion || '';
       const regB = b.venueDetails?.serverRegion || '';
@@ -282,6 +321,15 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
         Tournament Radar.
       </h2>
 
+      {/* EVENT INTERACTIVE MAP SECTION */}
+      <div className="w-full mb-8">
+        <EventMap 
+          physicalTournaments={physicalTournaments}
+          activeCoords={coords}
+          onSelectCity={handleCityOverride}
+        />
+      </div>
+
       {/* LOCATION & NOTIFICATION CONTROL PANEL */}
       <div className="w-full bg-[#ffedd5] border-[3px] border-[#1a1a1a] p-6 rounded-2xl shadow-[6px_6px_0px_rgba(26,26,26,1)] mb-8 flex flex-col gap-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-[2px] border-[#1a1a1a] pb-4 gap-4">
@@ -290,7 +338,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
               <MapPin className="w-5 h-5 text-red-500" />
             </div>
             <div>
-              <span className="text-[10px] font-black uppercase opacity-60">Detected Coordinates</span>
+              <span className="text-[10px] font-black uppercase opacity-65">Active Coordinates</span>
               <p className="font-bold text-sm">{locationName}</p>
             </div>
           </div>
@@ -373,16 +421,47 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
         </div>
       </div>
 
-      {/* FILTER SEARCH TIMELINE BAR */}
-      <div className="w-full bg-white border-[3px] border-[#1a1a1a] p-4 rounded-xl shadow-[4px_4px_0px_rgba(26,26,26,1)] mb-8 flex items-center gap-3">
-        <Search className="w-5 h-5 text-[#1a1a1a]/60" />
-        <input 
-          type="text" 
-          placeholder="Search by title, game, region, or physical venue location..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full bg-transparent border-none outline-none font-mono text-sm font-bold placeholder-[#1a1a1a]/40 py-1"
-        />
+      {/* FILTER SEARCH TIMELINE BAR & PLATFORM FILTER */}
+      <div className="w-full bg-white border-[3px] border-[#1a1a1a] p-4 rounded-xl shadow-[4px_4px_0px_rgba(26,26,26,1)] mb-8 flex flex-col md:flex-row items-stretch md:items-center gap-4">
+        <div className="flex-1 flex items-center gap-3">
+          <Search className="w-5 h-5 text-[#1a1a1a]/60" />
+          <input 
+            type="text" 
+            placeholder="Search matches, games, regions, or physical grounds..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-transparent border-none outline-none font-mono text-sm font-bold placeholder-[#1a1a1a]/40 py-1"
+          />
+        </div>
+        <div className="border-t-2 md:border-t-0 md:border-l-2 border-[#1a1a1a]/15 pt-3 md:pt-0 md:pl-4 flex items-center gap-2">
+          <span className="text-xs font-black uppercase whitespace-nowrap">Platform:</span>
+          <select
+            value={platformFilter}
+            onChange={(e) => setPlatformFilter(e.target.value)}
+            className="bg-transparent border-b-[2px] border-black outline-none font-mono text-xs font-bold interactive-target cursor-pointer"
+          >
+            <option value="All">All Platforms</option>
+            <option value="PC">PC Only</option>
+            <option value="Console">Console Only</option>
+            <option value="Mobile">Mobile Only</option>
+          </select>
+        </div>
+      </div>
+
+      {/* LIVE BROADCAST TICKER FEED */}
+      <div className="w-full bg-white border-[3px] border-[#1a1a1a] rounded-xl p-4 shadow-[4px_4px_0px_rgba(26,26,26,1)] mb-8">
+        <div className="flex items-center gap-2 border-b border-[#1a1a1a]/15 pb-2 mb-3">
+          <Radio className="w-4 h-4 text-red-500 animate-pulse" />
+          <span className="text-xs font-black uppercase tracking-wider">Live Radar Feed (automated updates)</span>
+        </div>
+        <div className="space-y-2">
+          {liveFeeds.map(feed => (
+            <div key={feed.id} className="flex justify-between items-start text-xs border-b border-dashed border-[#1a1a1a]/5 pb-1 gap-4 font-semibold">
+              <span className="text-[#1a1a1a] uppercase">⚡ {feed.text}</span>
+              <span className="text-[#1a1a1a]/40 text-[10px] whitespace-nowrap">{feed.time}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* DYNAMIC LISTINGS TIMELINE */}

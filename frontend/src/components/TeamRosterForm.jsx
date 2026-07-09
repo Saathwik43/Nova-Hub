@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShieldAlert, CheckCircle, Ticket, Calendar, MapPin, Globe } from 'lucide-react';
+import { ShieldAlert, CheckCircle, Ticket, Calendar, MapPin, Globe, CreditCard, Loader2, Copy, Share2 } from 'lucide-react';
 
 export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
   const teamSize = tournament?.teamSize || 5;
@@ -13,9 +13,16 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
   );
   const [rulesAccepted, setRulesAccepted] = useState(false);
   
+  // Registration States
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successData, setSuccessData] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Payment Simulation States
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [paymentFinished, setPaymentFinished] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const handleMemberChange = (index, field, value) => {
     const updated = [...roster];
@@ -23,7 +30,7 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
     setRoster(updated);
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegisterClick = (e) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -43,7 +50,29 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
       return;
     }
 
+    // If entry fee exists, prompt simulated payment check-out
+    if (tournament.entryFee > 0) {
+      setShowCheckout(true);
+    } else {
+      submitRegistration();
+    }
+  };
+
+  const simulatePayment = () => {
+    setPaymentProcessing(true);
+    setTimeout(() => {
+      setPaymentProcessing(false);
+      setPaymentFinished(true);
+      setTimeout(() => {
+        setShowCheckout(false);
+        submitRegistration();
+      }, 1500);
+    }, 2000);
+  };
+
+  const submitRegistration = async () => {
     setIsSubmitting(true);
+    setErrorMsg('');
 
     const payload = {
       teamName,
@@ -76,7 +105,69 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
     }
   };
 
+  const handleCopyLink = (token) => {
+    const inviteUrl = `${window.location.origin}/tournament/${tournament._id}?invite=${token}`;
+    navigator.clipboard.writeText(inviteUrl);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
+
+  if (showCheckout) {
+    return (
+      <div className="bg-[#ffdfba] border-[3px] border-[#1a1a1a] p-10 md:p-14 rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(26,26,26,1)] max-w-md mx-auto font-mono text-[#1a1a1a] relative z-20 text-center space-y-6">
+        <div className="bg-white border-2 border-black w-max mx-auto p-3 rotate-6 shadow-[2px_2px_0px_rgba(26,26,26,1)]">
+          <CreditCard className="w-8 h-8" />
+        </div>
+        
+        <h2 className="text-3xl font-black font-display uppercase border-b-[3px] border-black pb-4">
+          Entry Sub-Fee Payment
+        </h2>
+
+        <div className="bg-white border-[3px] border-black p-4 rounded-xl shadow-[4px_4px_0px_rgba(26,26,26,1)] text-left">
+          <span className="text-[10px] font-black uppercase opacity-60 block">Event Entry Stake</span>
+          <p className="font-bold text-lg">{tournament.title}</p>
+          <div className="flex justify-between items-baseline mt-4 border-t border-black/10 pt-2 font-black">
+            <span>TOTAL FEE:</span>
+            <span className="text-xl text-yellow-600">₹{tournament.entryFee}</span>
+          </div>
+        </div>
+
+        {paymentProcessing ? (
+          <div className="py-6 flex flex-col items-center gap-3">
+            <Loader2 className="w-8 h-8 animate-spin text-yellow-600" />
+            <span className="text-xs font-bold uppercase">Processing secure card transaction...</span>
+          </div>
+        ) : paymentFinished ? (
+          <div className="py-6 flex flex-col items-center gap-3 text-green-600">
+            <CheckCircle className="w-8 h-8" />
+            <span className="text-xs font-bold uppercase">Payment Approved! Finalizing seed...</span>
+          </div>
+        ) : (
+          <div className="space-y-4 pt-4">
+            <button
+              onClick={simulatePayment}
+              className="w-full bg-[#baffc9] hover:bg-[#a6e6b5] border-[3px] border-black py-4 rounded-xl font-black uppercase tracking-wider text-xs shadow-[4px_4px_0px_rgba(26,26,26,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_rgba(26,26,26,1)] transition-all interactive-target"
+            >
+              Simulate Sub-Fee Payment (One-Click)
+            </button>
+            <button
+              onClick={() => setShowCheckout(false)}
+              className="w-full bg-white hover:bg-gray-100 border-[3px] border-black py-3 rounded-xl font-black uppercase tracking-wider text-xs shadow-[4px_4px_0px_rgba(26,26,26,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_rgba(26,26,26,1)] transition-all interactive-target"
+            >
+              Cancel Roster Entry
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   if (successData) {
+    const inviteToken = successData.registrationToken;
+    const registeredTeamsList = successData.tournament?.registeredTeams || [];
+    // Estimate Seed based on when they joined
+    const seedRank = registeredTeamsList.length || 1;
+
     return (
       <div className="w-full max-w-2xl mx-auto py-8 space-y-8 font-mono text-[#1a1a1a]">
         
@@ -114,10 +205,34 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
               <span className="font-black text-[#1a1a1a]">{teamName}</span>
             </div>
 
+            <div className="flex justify-between items-center text-xs font-bold uppercase border-b-2 border-black/10 pb-2">
+              <span>Assigned Seed:</span>
+              <span className="font-black text-red-500">Seed Rank #{seedRank}</span>
+            </div>
+
+            {/* Unique Invite Link Section */}
+            <div className="bg-white border-[3px] border-black p-4 shadow-[4px_4px_0px_rgba(26,26,26,1)] space-y-2">
+              <span className="text-[10px] font-black uppercase opacity-60 block">Share / Invite Squad Members</span>
+              <div className="flex items-center gap-3">
+                <input
+                  type="text"
+                  readOnly
+                  value={`${window.location.origin}/tournament/${tournament._id}?invite=${inviteToken}`}
+                  className="w-full bg-gray-50 border border-black/15 py-1 px-2.5 text-xs outline-none font-semibold truncate select-text"
+                />
+                <button
+                  onClick={() => handleCopyLink(inviteToken)}
+                  className="bg-yellow-200 border-2 border-black p-2 font-bold uppercase shadow-[1.5px_1.5px_0px_rgba(26,26,26,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all flex items-center justify-center gap-1 text-[10px]"
+                >
+                  {copiedLink ? 'Copied!' : <Copy className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
+
             <div className="bg-white border-[3px] border-[#1a1a1a] p-4 text-center shadow-[4px_4px_0px_rgba(26,26,26,1)]">
               <span className="text-[10px] uppercase font-black opacity-60 block">Roster Verification Token</span>
-              <span className="text-md md:text-lg font-black tracking-wider text-red-500 font-display select-text block mt-1">
-                {successData.registrationToken}
+              <span className="text-md md:text-lg font-black tracking-wider text-[#1a1a1a] font-display select-text block mt-1">
+                {inviteToken}
               </span>
             </div>
 
@@ -160,9 +275,10 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
       </h2>
       
       {tournament && (
-        <p className="text-xs font-bold uppercase tracking-widest mb-10 opacity-70">
-          Target Arena: {tournament.title}
-        </p>
+        <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest mb-10 opacity-70">
+          <span>Target Arena: {tournament.title}</span>
+          {tournament.entryFee > 0 && <span className="bg-yellow-200 border border-black py-0.5 px-2">FEE: ₹{tournament.entryFee}</span>}
+        </div>
       )}
 
       {errorMsg && (
@@ -172,7 +288,7 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleRegisterClick} className="space-y-8">
         
         {/* SQUAD METADATA */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-b-[2px] border-black/10 pb-6">
@@ -274,7 +390,7 @@ export const TeamRosterForm = ({ tournament, apiBaseUrl, user, onSuccess }) => {
           disabled={isSubmitting}
           className="w-full mt-10 bg-white hover:bg-yellow-100 border-[3px] border-[#1a1a1a] py-4 rounded-xl font-black uppercase tracking-widest text-sm shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] hover:shadow-[2px_2px_0px_0px_rgba(26,26,26,1)] hover:translate-x-[4px] hover:translate-y-[4px] transition-all interactive-target disabled:opacity-50"
         >
-          {isSubmitting ? 'Registering Squad...' : 'Confirm Roster & Get Pass Ticket'}
+          {isSubmitting ? 'Registering Squad...' : 'Confirm Roster & Proceed to Entry Fee'}
         </button>
       </form>
     </div>

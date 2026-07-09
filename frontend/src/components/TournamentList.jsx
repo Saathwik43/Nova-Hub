@@ -46,9 +46,14 @@ export const TournamentList = ({ tournaments = [], onSelectEvent, user }) => {
                     </span>
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 bg-white border-2 border-black px-2 py-0.5">
+                  <span className="flex items-center gap-2 bg-white border-2 border-black px-2 py-0.5 flex-wrap">
                     <Globe className="w-3.5 h-3.5 text-blue-500" />
                     <span>Online · {t.venueDetails?.serverRegion} Region</span>
+                    {t.venueDetails?.platform && (
+                      <span className="bg-[#1a1a1a] text-white px-1.5 py-0.2 text-[9px] font-black uppercase rounded-sm">
+                        {t.venueDetails.platform}
+                      </span>
+                    )}
                   </span>
                 )}
 

@@ -45,7 +45,8 @@ const tournamentSchema = new Schema({
     pinCode: { type: String, default: '' },
     stadiumHall: { type: String, default: '' },
     latitude: { type: Number, default: 0 },
-    longitude: { type: Number, default: 0 }
+    longitude: { type: Number, default: 0 },
+    platform: { type: String, enum: ['PC', 'Console', 'Mobile', ''], default: '' }
   },
   format: {
     type: String,
