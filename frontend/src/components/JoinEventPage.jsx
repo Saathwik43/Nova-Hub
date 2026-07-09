@@ -251,10 +251,14 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
           console.warn('Geolocation access failed/denied, falling back to IP detection.', error);
           setLocationName('GPS denied. Querying IP location...');
           try {
-            // Query IPStack with user provided key
-            const ipRes = await fetch('http://api.ipstack.com/check?access_key=16b60da831def3a03750350c4db9b742');
+            // Dynamic protocol mapping to prevent Mixed Content console errors on HTTPS deployments
+            const proto = window.location.protocol === 'https:' ? 'https:' : 'http:';
+            const ipRes = await fetch(`${proto}//api.ipstack.com/check?access_key=16b60da831def3a03750350c4db9b742`);
             if (ipRes.ok) {
               const ipData = await ipRes.json();
+              if (ipData.success === false) {
+                throw new Error(ipData.error?.info || 'ipstack HTTPS restriction');
+              }
               if (ipData.latitude && ipData.longitude) {
                 setCoords({ latitude: ipData.latitude, longitude: ipData.longitude });
                 setLocationMethod('IP (ipstack)');
@@ -263,7 +267,7 @@ export const JoinEventPage = ({ setCurrentPage, apiBaseUrl, user }) => {
               }
             }
           } catch (ipstackErr) {
-            console.warn('IPStack blocked (mixed content or offline), trying HTTPS ipapi...', ipstackErr);
+            console.warn('IPStack check skipped/denied (likely HTTPS restricted), trying HTTPS ipapi...', ipstackErr.message || ipstackErr);
             try {
               const ipRes = await fetch('https://ipapi.co/json/');
               if (ipRes.ok) {
